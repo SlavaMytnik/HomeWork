@@ -15,15 +15,15 @@ public class Task5Variant1 {
         System.out.print("Введите имя: ");
         String name = in.nextLine();
 
-        if (Objects.equals(name, "Вася")){
+        if (Objects.equals(name, "Вася")) {
             System.out.println("Привет!");
         }
 
-        if (Objects.equals(name, "Вася") || Objects.equals(name, "Анастасия")){
+        if (Objects.equals(name, "Вася") || Objects.equals(name, "Анастасия")) {
             System.out.println("Я тебя так долго ждал");
         }
 
-        if (!Objects.equals(name, "Вася") && !Objects.equals(name, "Анастасия")){
+        if (!Objects.equals(name, "Вася") && !Objects.equals(name, "Анастасия")) {
             System.out.println("Добрый день, а вы кто?");
         }
     }

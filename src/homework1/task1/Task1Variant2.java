@@ -41,7 +41,7 @@ public class Task1Variant2 {
     /**
      * Метод getResult осуществляет вычисление результата побитовых операций
      */
-    public static void getResult(int a, int b){
+    public static void getResult(int a, int b) {
         printResult("&", a, b, a & b, 0);
         printResult("|", a, b, a | b, 0);
         printResult("^", a, b, a ^ b, 0);
@@ -55,7 +55,7 @@ public class Task1Variant2 {
      * Метод printResult осуществляет печать результата побитовых операций
      */
     public static void printResult(String text, int leftOperand, int rightOperand,
-                                   int result, int tag){
+                                   int result, int tag) {
         if (tag == 1) {
             System.out.println(String.format("%" + STRING_SIZE + "s",
                     "Побитовая операция: ") + text + leftOperand);
@@ -85,7 +85,7 @@ public class Task1Variant2 {
      * Метод getBinaryString осуществляет преобразование
      * значения целого числа в текст в виде двоичного числа
      */
-    public static String getBinaryString(int value){
+    public static String getBinaryString(int value) {
         return String.format("%32s",
                 Integer.toBinaryString(value)).replace(' ', '0');
     }

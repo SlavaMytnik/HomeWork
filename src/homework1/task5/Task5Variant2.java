@@ -15,10 +15,10 @@ public class Task5Variant2 {
         System.out.print("Введите имя: ");
         String name = in.nextLine();
 
-        if (Objects.equals(name, "Вася")){
+        if (Objects.equals(name, "Вася")) {
             System.out.println("Привет!");
             System.out.println("Я тебя так долго ждал");
-        } else if (Objects.equals(name, "Анастасия")){
+        } else if (Objects.equals(name, "Анастасия")) {
             System.out.println("Я тебя так долго ждал");
         } else {
             System.out.println("Добрый день, а вы кто?");

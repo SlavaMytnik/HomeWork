@@ -19,7 +19,7 @@ public class Task4 {
     /**
      * Метод getBinaryString определяет спать дальше или нет
      */
-    public static boolean sleepln(boolean weekday, boolean vacation){
+    public static boolean sleepln(boolean weekday, boolean vacation) {
 
         // Если не рабочий день или отпуск, то можно спать
         if (!weekday || vacation) {

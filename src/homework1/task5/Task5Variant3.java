@@ -15,7 +15,7 @@ public class Task5Variant3 {
         System.out.print("Введите имя: ");
         String name = in.nextLine();
 
-        switch (name){
+        switch (name) {
             case "Вася":
                 System.out.println("Привет!");
 
@@ -25,7 +25,6 @@ public class Task5Variant3 {
 
             default:
                 System.out.println("Добрый день, а вы кто?");
-                break;
         }
     }
 }
