@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class Task6 {
     public static void main(String[] args) {
-        int[] phoneNumberArray = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+        int[] phoneNumberArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
         System.out.println(createPhoneNumber(phoneNumberArray));
     }
@@ -19,8 +19,8 @@ public class Task6 {
      */
     public static String createPhoneNumber(int[] receivedPhoneNumberArray) {
 
-        // Преобразование массива чисел в строку и
-        // удаление из нее скобок, запятых и пробелов
+        /* Преобразование массива чисел в строку и
+        удаление из нее скобок, запятых и пробелов */
         String result = Arrays.toString(receivedPhoneNumberArray).
                 replaceAll("\\[|\\]|,|\\ ", "");
 
