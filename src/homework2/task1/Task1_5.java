@@ -13,7 +13,8 @@ public class Task1_5 {
             printText = "";
 
             for (int j = 2; j <= 5; j++) {
-                printText += j + " * " + String.format("%2s", i) + " = " + String.format("%2s", j * i);
+                printText += j + " * " + String.format("%2s", i) + " = " +
+                        String.format("%2s", j * i);
 
                 if (j != 5) {
                     printText += " | ";
@@ -29,7 +30,8 @@ public class Task1_5 {
             printText = "";
 
             for (int j = 6; j <= 9; j++) {
-                printText += j + " * " + String.format("%2s", i) + " = " + String.format("%2s", j * i);
+                printText += j + " * " + String.format("%2s", i) + " = " +
+                        String.format("%2s", j * i);
 
                 if (j != 9) {
                     printText += " | ";

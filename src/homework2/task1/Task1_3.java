@@ -46,6 +46,8 @@ public class Task1_3 {
             }
         }
 
+        in.close();
+
         for (int i = 0; i < exponent; i++) {
             result *= base;
         }
