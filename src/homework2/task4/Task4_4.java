@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * Класс Task4_4 выполняет Задание 4.4 Урока 2
- * (сортировка элементов введенного массива)
+ * (сортировка элементов массива случайных чисел)
  */
 public class Task4_4 {
     public static void main(String[] args) {
