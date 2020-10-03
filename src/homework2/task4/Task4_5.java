@@ -41,7 +41,10 @@ public class Task4_5 {
                 i++;
             }
 
+            // flag = 1 - для пузырьковой сортировки
             Sorter.bubbleAndShakerSorter(1, myArray);
+
+            // flag = 2 - для шейкерной сортировки
             Sorter.bubbleAndShakerSorter(2, myArray);
         } else {
             System.out.println("Массив элементов пуст!");

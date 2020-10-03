@@ -11,17 +11,17 @@ public class Task4_4 {
         Random rand = new Random();
 
         // Случайным образом определяем размер массива
-        int myArraySize = rand.nextInt(10);
-        int[] myArray;
-
-        myArray = new int[myArraySize];
+        int[] myArray = new int[rand.nextInt(10)];
 
         // Наполняем массив случайными числами
-        for (int i = 0; i < myArraySize; i++) {
+        for (int i = 0; i < myArray.length; i++) {
             myArray[i] = rand.nextInt(200) - 100;
         }
 
+        // flag = 1 - для пузырьковой сортировки
         Sorter.bubbleAndShakerSorter(1, myArray);
+
+        // flag = 2 - для шейкерной сортировки
         Sorter.bubbleAndShakerSorter(2, myArray);
     }
 }

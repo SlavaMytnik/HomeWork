@@ -7,7 +7,7 @@ package homework2.task4;
 public class Task4_2_1 {
     public static void main(String[] args) {
 
-        // tag = 1 - для пузырьковой сортировки
+        // flag = 1 - для пузырьковой сортировки
         int[] myArray = new int[]{1, 2, 3, 4, 5, 6};
         Sorter.bubbleAndShakerSorter(1, myArray);
 

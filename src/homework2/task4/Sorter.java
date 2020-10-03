@@ -7,12 +7,16 @@ import java.util.Arrays;
  */
 public class Sorter {
 
-    // Класс bubbleAndShakerSorter выполняет пузырьковую и шейкерную сортировку
-    public static void bubbleAndShakerSorter(int tag, final int[] receivedArray) {
+    /**
+     * Метод bubbleAndShakerSorter выполняет пузырьковую и шейкерную сортировку
+     * @param flag определяет вид сортировки: 1 - пузырьковая, 2 - шейкерная
+     * @param receivedArray принимает массив чисел
+     */
+    public static void bubbleAndShakerSorter(int flag, int[] receivedArray) {
         int[] sortedArray = receivedArray.clone();
 
-        // Пузырьковая tag == 1 или шейкерная tag == 2 сортировка
-        if (tag == 1 || tag == 2) {
+        // Пузырьковая или шейкерная сортировка
+        if (flag == 1 || flag == 2) {
             int left = 0;
             int right = sortedArray.length - 1;
 
@@ -31,8 +35,9 @@ public class Sorter {
 
                 right--;
 
-                // Цикл для шейкерной сортировки
-                if (tag == 2) {
+                if (flag == 2) {
+
+                    // Цикл для шейкерной сортировки
                     for (int j = right; j > left; j--) {
                         if (sortedArray[j] < sortedArray[j - 1]) {
                             int temp = sortedArray[j];
@@ -45,7 +50,7 @@ public class Sorter {
                 }
             } while (left < right);
 
-            if (tag == 1) {
+            if (flag == 1) {
                 sortType = "пузырьковой";
             } else {
                 sortType = "шейкерной";

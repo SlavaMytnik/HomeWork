@@ -41,6 +41,7 @@ public class Task2_2 {
                 i++;
             }
 
+            // Выводим на печать только каждый второй элемент массива
             for (int j = 0; j < myArraySize; j++) {
                 if (j % 2 != 0) {
                     System.out.println(myArray[j]);
