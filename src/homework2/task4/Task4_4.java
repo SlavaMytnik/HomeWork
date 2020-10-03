@@ -10,7 +10,7 @@ public class Task4_4 {
     public static void main(String[] args) {
         Random rand = new Random();
 
-        // Случайным образом определяем размер массива
+        // Создаем массив случайной длинны
         int[] myArray = new int[rand.nextInt(10)];
 
         // Наполняем массив случайными числами
