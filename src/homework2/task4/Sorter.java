@@ -17,38 +17,40 @@ public class Sorter {
 
         // Пузырьковая или шейкерная сортировка
         if (flag == 1 || flag == 2) {
-            int left = 0;
-            int right = sortedArray.length - 1;
-
             String sortType = "";
 
-            do {
+            if (sortedArray.length > 1) {
+                int left = 0;
+                int right = sortedArray.length - 1;
 
-                // Цикл для пузырьковой и шейкерной сортировки
-                for (int j = left; j < right; j++) {
-                    if (sortedArray[j] > sortedArray[j + 1]) {
-                        int temp = sortedArray[j];
-                        sortedArray[j] = sortedArray[j + 1];
-                        sortedArray[j + 1] = temp;
-                    }
-                }
+                do {
 
-                right--;
-
-                if (flag == 2) {
-
-                    // Цикл для шейкерной сортировки
-                    for (int j = right; j > left; j--) {
-                        if (sortedArray[j] < sortedArray[j - 1]) {
+                    // Цикл для пузырьковой и шейкерной сортировки
+                    for (int j = left; j < right; j++) {
+                        if (sortedArray[j] > sortedArray[j + 1]) {
                             int temp = sortedArray[j];
-                            sortedArray[j] = sortedArray[j - 1];
-                            sortedArray[j - 1] = temp;
+                            sortedArray[j] = sortedArray[j + 1];
+                            sortedArray[j + 1] = temp;
                         }
                     }
 
-                    left++;
-                }
-            } while (left < right);
+                    right--;
+
+                    if (flag == 2) {
+
+                        // Цикл для шейкерной сортировки
+                        for (int j = right; j > left; j--) {
+                            if (sortedArray[j] < sortedArray[j - 1]) {
+                                int temp = sortedArray[j];
+                                sortedArray[j] = sortedArray[j - 1];
+                                sortedArray[j - 1] = temp;
+                            }
+                        }
+
+                        left++;
+                    }
+                } while (left < right);
+            }
 
             if (flag == 1) {
                 sortType = "пузырьковой";
