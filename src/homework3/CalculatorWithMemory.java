@@ -142,9 +142,8 @@ public class CalculatorWithMemory {
     }
 
     /**
-     * Метод getFromMemory возвращает записанный в памяти
-     * результат последней операции
-     * @return
+     * Метод getFromMemory возвращает записанное в памяти значение
+     * @return возвращает записанное в памяти значение
      */
     public double getFromMemory() {
         double task = memoryResult;

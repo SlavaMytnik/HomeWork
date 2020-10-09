@@ -16,21 +16,24 @@ public class CalculatorWithMemoryMain {
 
         calc.saveToMemory();
 
-        System.out.println("Результат последней арифметической операции: " +
+        System.out.println("Значение из памяти: " +
                 calc.getFromMemory());
 
         // Пример для теста
         calc.sum(1.0, 2.0);
 
         // Результат отсутствует, т.к. память очищена при получении ее значения
-        System.out.println("Результат последней арифметической операции: " +
+        System.out.println("Значение из памяти: " +
                 calc.getFromMemory());
 
         // Перезаписываем в память результат последней арифметической операции
         calc.saveToMemory();
 
+        // Повторно выполняем операцию без сохранения в памяти
+        calc.sum(5.0, 10.0);
+
         // 3.0
-        System.out.println("Результат последней арифметической операции: " +
+        System.out.println("Значение из памяти: " +
                 calc.getFromMemory());
     }
 }
