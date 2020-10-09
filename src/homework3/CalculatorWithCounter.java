@@ -42,24 +42,7 @@ public class CalculatorWithCounter {
      * @return возвращает сумму двух чисел
      */
     public double sum(double a, double b) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("sum", double.class, double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a, b);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(1, "sum", a, b, 0);
     }
 
     /**
@@ -69,24 +52,7 @@ public class CalculatorWithCounter {
      * @return возвращает разность двух чисел
      */
     public double diff(double a, double b) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("diff", double.class, double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a, b);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(1, "diff", a, b, 0);
     }
 
     /**
@@ -96,24 +62,7 @@ public class CalculatorWithCounter {
      * @return возвращает результат деления двух чисел
      */
     public double div(double a, double b) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("div", double.class, double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a, b);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(1, "div", a, b, 0);
     }
 
     /**
@@ -123,24 +72,7 @@ public class CalculatorWithCounter {
      * @return возвращает результат умножения двух чисел
      */
     public double mult(double a, double b) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("mult", double.class, double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a, b);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(1, "mult", a, b, 0);
     }
 
     /**
@@ -149,24 +81,7 @@ public class CalculatorWithCounter {
      * @return возвращает модуль числа
      */
     public double abs(double a) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("abs", double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(2, "abs", a, 0, 0);
     }
 
     /**
@@ -175,39 +90,49 @@ public class CalculatorWithCounter {
      * @return возвращает корень числа
      */
     public double sqrt(double a) {
-        double result = 0;
-
-        try {
-            Method callMethod = obj.getClass().getMethod("sqrt", double.class);
-            try {
-                result = (double) callMethod.invoke(obj, a);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
-        countOperation++;
-
-        return result;
+        return getResultFromMethod(2, "sqrt", a, 0, 0);
     }
 
     /**
      * Метод pow вычисляет результат возведения числа в степень
      * @param a - дробное положительное число
-     * @param b - целочисленная степень
+     * @param power - целочисленная степень
      * @return возвращает модуль числа
      */
-    public double pow(double a, int b) {
+    public double pow(double a, int power) {
+        return getResultFromMethod(3, "pow", a, 0, power);
+    }
+
+    /**
+     * Метод getResultFromMethod осуществляет расчет арифметического выражения
+     * @param flag определяет структуру вызываемого метода
+     * @param methodName - имя вызываемого метода
+     * @param a - первое число
+     * @param b - второе число
+     * @param power - степень числа
+     * @return возвращает результат расчета
+     */
+    private double getResultFromMethod(int flag, String methodName, double a, double b, int power) {
         double result = 0;
+        Method callMethod;
 
         try {
-            Method callMethod = obj.getClass().getMethod("pow", double.class, int.class);
+            if (flag == 1) {
+                callMethod = obj.getClass().getMethod(methodName, double.class, double.class);
+            } else if (flag == 2) {
+                callMethod = obj.getClass().getMethod(methodName, double.class);
+            } else {
+                callMethod = obj.getClass().getMethod(methodName, double.class, int.class);
+            }
+
             try {
-                result = (double) callMethod.invoke(obj, a, b);
+                if (flag == 1) {
+                    result = (double) callMethod.invoke(obj, a, b);
+                } else if (flag == 2) {
+                    result = (double) callMethod.invoke(obj, a);
+                } else {
+                    result = (double) callMethod.invoke(obj, a, power);
+                }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
