@@ -1,16 +1,16 @@
 package homework3;
 
 /**
- * Класс CalculatorWithCounterMain выполняет Задание 5.6 Урока 3
+ * Класс CalculatorWithCounterInterfaceMain выполняет Задание 6.3 Урока 3
  * (вывод на консоль арифметического выражения
- * с помощью экземпляра класса CalculatorWithCounter)
+ * с помощью экземпляра класса CalculatorWithCounterInterface)
  */
-public class CalculatorWithCounterMain {
+public class CalculatorWithCounterInterfaceMain {
     public static void main(String[] args) {
         double result;
 
-        CalculatorWithCounter calc =
-                new CalculatorWithCounter(new CalculatorWithMathExtends());
+        CalculatorWithCounterInterface calc =
+                new CalculatorWithCounterInterface(new CalculatorWithMathExtends());
 
         // 4.1 + 15 * 7 + (28 / 5) ^ 2
         result = calc.sum(calc.sum(4.1, calc.mult(15, 7)),

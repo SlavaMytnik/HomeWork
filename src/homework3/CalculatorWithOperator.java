@@ -6,7 +6,7 @@ import static java.lang.Double.*;
  * Класс CalculatorWithOperator выполняет Задания 2.1 - 2.4 Урока 3
  * (калькулятор без использования Math)
  */
-public class CalculatorWithOperator {
+public class CalculatorWithOperator implements ICalculator {
 
     /**
      * Метод sum вычисляет сумму двух чисел
@@ -91,17 +91,17 @@ public class CalculatorWithOperator {
     /**
      * Метод pow вычисляет результат возведения числа в степень
      * @param a - дробное положительное число
-     * @param b - целочисленная степень
+     * @param power - целочисленная степень
      * @return возвращает модуль числа
      */
-    public double pow(double a, int b) {
+    public double pow(double a, int power) {
         if (a < 0) {
             return NaN;
         }
 
         double result = 1;
 
-        for (int i = 0; i < b; i++) {
+        for (int i = 0; i < power; i++) {
             result *= a;
         }
 

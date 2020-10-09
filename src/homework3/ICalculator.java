@@ -1,13 +1,10 @@
 package homework3;
 
-import static java.lang.Double.NEGATIVE_INFINITY;
-import static java.lang.Double.POSITIVE_INFINITY;
-
 /**
- * Класс CalculatorWithMathCopy выполняет Задания 3.1, 3.2 Урока 3
- * (калькулятор с использованием Math)
+ * Интерфейс ICalculator выполняет Задание 6 Урока 3
+ * (интерфейс базовых арифметических действий)
  */
-public class CalculatorWithMathCopy implements ICalculator {
+public interface ICalculator {
 
     /**
      * Метод sum вычисляет сумму двух чисел
@@ -15,9 +12,7 @@ public class CalculatorWithMathCopy implements ICalculator {
      * @param b - второе число
      * @return возвращает сумму двух чисел
      */
-    public double sum(double a, double b) {
-        return a + b;
-    }
+    double sum(double a, double b);
 
     /**
      * Метод diff вычисляет разность двух чисел
@@ -25,9 +20,7 @@ public class CalculatorWithMathCopy implements ICalculator {
      * @param b - второе число
      * @return возвращает разность двух чисел
      */
-    public double diff(double a, double b) {
-        return a - b;
-    }
+    double diff(double a, double b);
 
     /**
      * Метод div вычисляет результат деления двух чисел
@@ -35,15 +28,7 @@ public class CalculatorWithMathCopy implements ICalculator {
      * @param b - второе число
      * @return возвращает результат деления двух чисел
      */
-    public double div(double a, double b) {
-        if (a >= 0 && b == 0) {
-            return POSITIVE_INFINITY;
-        } else if (a < 0 && b == 0) {
-            return NEGATIVE_INFINITY;
-        }
-
-        return a / b;
-    }
+    double div(double a, double b);
 
     /**
      * Метод mult вычисляет результат умножения двух чисел
@@ -51,27 +36,21 @@ public class CalculatorWithMathCopy implements ICalculator {
      * @param b - второе число
      * @return возвращает результат умножения двух чисел
      */
-    public double mult(double a, double b) {
-        return a * b;
-    }
+    double mult(double a, double b);
 
     /**
      * Метод abs вычисляет модуль числа
      * @param a - число
      * @return возвращает модуль числа
      */
-    public double abs(double a) {
-        return Math.abs(a);
-    }
+    double abs(double a);
 
     /**
      * Метод sqrt вычисляет корень числа
      * @param a - число
      * @return возвращает корень числа
      */
-    public double sqrt(double a) {
-        return Math.sqrt(a);
-    }
+    double sqrt(double a);
 
     /**
      * Метод pow вычисляет результат возведения числа в степень
@@ -79,7 +58,5 @@ public class CalculatorWithMathCopy implements ICalculator {
      * @param power - целочисленная степень
      * @return возвращает модуль числа
      */
-    public double pow(double a, int power) {
-        return Math.pow(a, power);
-    }
+    double pow(double a, int power);
 }

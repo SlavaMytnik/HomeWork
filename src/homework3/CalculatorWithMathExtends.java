@@ -4,7 +4,8 @@ package homework3;
  * Класс CalculatorWithMathExtends выполняет Задания 4.1 - 4.3 Урока 3
  * (калькулятор с наследованием класса CalculatorWithOperator)
  */
-public class CalculatorWithMathExtends extends CalculatorWithOperator {
+public class CalculatorWithMathExtends extends CalculatorWithOperator
+        implements ICalculator {
 
     /**
      * Метод abs вычисляет модуль числа
@@ -27,10 +28,10 @@ public class CalculatorWithMathExtends extends CalculatorWithOperator {
     /**
      * Метод pow вычисляет результат возведения числа в степень
      * @param a - дробное положительное число
-     * @param b - целочисленная степень
+     * @param power - целочисленная степень
      * @return возвращает модуль числа
      */
-    public double pow(double a, int b) {
-        return Math.pow(a, b);
+    public double pow(double a, int power) {
+        return Math.pow(a, power);
     }
 }
