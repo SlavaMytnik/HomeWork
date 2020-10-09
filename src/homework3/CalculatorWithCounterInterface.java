@@ -1,16 +1,11 @@
 package homework3;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import static java.lang.Double.NaN;
-
 /**
  * Класс CalculatorWithCounter выполняет Задания 6.1 - 6.3 Урока 3
  * (подсчет количества использования калькулятора с применением интерфейса)
  */
 public class CalculatorWithCounterInterface {
-    private Object obj;
+    private ICalculator obj;
     private int countOperation = 0;
 
     /**
@@ -28,7 +23,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает сумму двух чисел
      */
     public double sum(double a, double b) {
-        return getResultFromMethod(1, "sum", a, b, 0);
+        countOperation++;
+
+        return obj.sum(a, b);
     }
 
     /**
@@ -38,7 +35,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает разность двух чисел
      */
     public double diff(double a, double b) {
-        return getResultFromMethod(1, "diff", a, b, 0);
+        countOperation++;
+
+        return obj.diff(a, b);
     }
 
     /**
@@ -48,7 +47,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает результат деления двух чисел
      */
     public double div(double a, double b) {
-        return getResultFromMethod(1, "div", a, b, 0);
+        countOperation++;
+
+        return obj.div(a, b);
     }
 
     /**
@@ -58,7 +59,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает результат умножения двух чисел
      */
     public double mult(double a, double b) {
-        return getResultFromMethod(1, "mult", a, b, 0);
+        countOperation++;
+
+        return obj.mult(a, b);
     }
 
     /**
@@ -67,7 +70,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает модуль числа
      */
     public double abs(double a) {
-        return getResultFromMethod(2, "abs", a, 0, 0);
+        countOperation++;
+
+        return obj.abs(a);
     }
 
     /**
@@ -76,7 +81,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает корень числа
      */
     public double sqrt(double a) {
-        return getResultFromMethod(2, "sqrt", a, 0, 0);
+        countOperation++;
+
+        return obj.sqrt(a);
     }
 
     /**
@@ -86,51 +93,9 @@ public class CalculatorWithCounterInterface {
      * @return возвращает модуль числа
      */
     public double pow(double a, int power) {
-        return getResultFromMethod(3, "pow", a, 0, power);
-    }
-
-    /**
-     * Метод getResultFromMethod осуществляет расчет арифметического выражения
-     * @param flag определяет структуру вызываемого метода
-     * @param methodName - имя вызываемого метода
-     * @param a - первое число
-     * @param b - второе число
-     * @param power - степень числа
-     * @return возвращает результат расчета
-     */
-    private double getResultFromMethod(int flag, String methodName, double a, double b, int power) {
-        double result = NaN;
-        Method callMethod;
-
-        try {
-            if (flag == 1) {
-                callMethod = obj.getClass().getMethod(methodName, double.class, double.class);
-            } else if (flag == 2) {
-                callMethod = obj.getClass().getMethod(methodName, double.class);
-            } else {
-                callMethod = obj.getClass().getMethod(methodName, double.class, int.class);
-            }
-
-            try {
-                if (flag == 1) {
-                    result = (double) callMethod.invoke(obj, a, b);
-                } else if (flag == 2) {
-                    result = (double) callMethod.invoke(obj, a);
-                } else {
-                    result = (double) callMethod.invoke(obj, a, power);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
         countOperation++;
 
-        return result;
+        return obj.pow(a, power);
     }
 
     /**
