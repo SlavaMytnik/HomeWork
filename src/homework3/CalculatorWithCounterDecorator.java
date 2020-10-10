@@ -1,22 +1,26 @@
 package homework3;
 
-import static java.lang.Double.NaN;
-
 /**
- * Класс CalculatorWithCounter выполняет Задания 7.1 - 7.5 Урока 3
- * (использование памяти калькулятора)
+ * Класс CalculatorWithCounter выполняет Задания 8.1 - 8.4 Урока 3
+ * (декоратор подсчета количества использования калькулятора с применением интерфейса)
  */
-public class CalculatorWithMemory {
-    private ICalculator obj;
-    private double memoryLast = NaN;
-    private double memoryResult = NaN;
+public class CalculatorWithCounterDecorator implements ICalculator {
+    private ICalculator calculator = null;
+    private int countOperation = 0;
 
     /**
      * Метод CalculatorWithCounter является конструктором класса
-     * @param obj принимает объект типа ICalculator
+     * @param calculator принимает объект типа ICalculator
      */
-    public CalculatorWithMemory(ICalculator obj) {
-        this.obj = obj;
+    public CalculatorWithCounterDecorator(ICalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    /**
+     * Метод getCalculator возвращает калькулятор
+     */
+    public ICalculator getCalculator() {
+        return calculator;
     }
 
     /**
@@ -25,10 +29,11 @@ public class CalculatorWithMemory {
      * @param b - второе число
      * @return возвращает сумму двух чисел
      */
+    @Override
     public double sum(double a, double b) {
-        memoryLast = obj.sum(a, b);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.sum(a, b);
     }
 
     /**
@@ -37,10 +42,11 @@ public class CalculatorWithMemory {
      * @param b - второе число
      * @return возвращает разность двух чисел
      */
+    @Override
     public double diff(double a, double b) {
-        memoryLast = obj.diff(a, b);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.diff(a, b);
     }
 
     /**
@@ -49,10 +55,11 @@ public class CalculatorWithMemory {
      * @param b - второе число
      * @return возвращает результат деления двух чисел
      */
+    @Override
     public double div(double a, double b) {
-        memoryLast = obj.div(a, b);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.div(a, b);
     }
 
     /**
@@ -61,10 +68,11 @@ public class CalculatorWithMemory {
      * @param b - второе число
      * @return возвращает результат умножения двух чисел
      */
+    @Override
     public double mult(double a, double b) {
-        memoryLast = obj.mult(a, b);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.mult(a, b);
     }
 
     /**
@@ -72,10 +80,11 @@ public class CalculatorWithMemory {
      * @param a - число
      * @return возвращает модуль числа
      */
+    @Override
     public double abs(double a) {
-        memoryLast = obj.abs(a);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.abs(a);
     }
 
     /**
@@ -83,10 +92,11 @@ public class CalculatorWithMemory {
      * @param a - число
      * @return возвращает корень числа
      */
+    @Override
     public double sqrt(double a) {
-        memoryLast = obj.sqrt(a);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.sqrt(a);
     }
 
     /**
@@ -95,27 +105,17 @@ public class CalculatorWithMemory {
      * @param power - целочисленная степень
      * @return возвращает модуль числа
      */
+    @Override
     public double pow(double a, int power) {
-        memoryLast = obj.pow(a, power);
+        countOperation++;
 
-        return memoryLast;
+        return calculator.pow(a, power);
     }
 
     /**
-     * Метод saveToMemory сохраняет в памяти результат последней операции
+     * Метод getCountOperation возвращает количество арифметических операций
      */
-    public void saveToMemory() {
-        memoryResult = memoryLast;
-    }
-
-    /**
-     * Метод getFromMemory возвращает записанное в памяти значение
-     * @return возвращает записанное в памяти значение
-     */
-    public double getFromMemory() {
-        double task = memoryResult;
-        memoryResult = NaN;
-
-        return task;
+    public int getCountOperation() {
+        return countOperation;
     }
 }
