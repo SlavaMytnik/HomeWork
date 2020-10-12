@@ -14,7 +14,7 @@ public class CalculatorWithCounter {
     private CalculatorWithMathCopy calculator2;
     private CalculatorWithMathExtends calculator3;
 
-    private static int countOperation = 0;
+    private int countOperation = 0;
     private int calculatorNumber;
 
     /**

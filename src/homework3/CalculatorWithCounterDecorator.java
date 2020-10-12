@@ -7,7 +7,7 @@ package homework3;
 public class CalculatorWithCounterDecorator implements ICalculator {
     private ICalculator calculator = null;
 
-    private static int countOperation = 0;
+    private int countOperation = 0;
 
     /**
      * Метод CalculatorWithCounter является конструктором класса

@@ -9,8 +9,8 @@ import static java.lang.Double.NaN;
 public class CalculatorWithMemoryDecorator implements ICalculator {
     private ICalculator calculator = null;
 
-    private static double memoryLast = NaN;
-    private static double memoryResult = NaN;
+    private double memoryLast = NaN;
+    private double memoryResult = NaN;
 
     /**
      * Метод CalculatorWithCounter является конструктором класса

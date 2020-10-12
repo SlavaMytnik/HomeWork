@@ -10,7 +10,9 @@ import java.util.regex.Pattern;
  */
 public class CalculatorStringExpression {
     public static void main(String[] args) {
-        String text;
+        boolean isError;
+
+        String enteredText;
 
         Scanner in = new Scanner(System.in);
 
@@ -18,11 +20,25 @@ public class CalculatorStringExpression {
         System.out.println("Допустимые константы: PI, E");
         System.out.println("Арифметическое выражение можно вводить с пробелами или без");
 
+        System.out.println("***//**".matches("[\\**|\\/*]"));
+
         while (true) {
             System.out.print("Введите арифметическое выражение: ");
-            text = in.nextLine();
+            enteredText = in.nextLine();
 
-            System.out.println(goCalculate(text));
+            isError = false;
+
+            // Проверка на ошибки во введенном выражении
+            if (enteredText.length() == 0
+                    || enteredText.replaceAll("[-0-9\\^\\(\\)\\|\\*\\/\\+\\ ]", "").length() > 0) {
+                isError = true;
+            }
+
+            if (!isError) {
+                System.out.println(goCalculate(enteredText));
+            } else {
+                System.out.println("Ошибочный формат данных!");
+            }
         }
     }
 
