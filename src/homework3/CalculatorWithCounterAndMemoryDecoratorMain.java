@@ -20,24 +20,15 @@ public class CalculatorWithCounterAndMemoryDecoratorMain {
 
         System.out.println("4.1 + 15 * 7 + (28 / 5) ^ 2 = " + result);
 
-        try {
-            System.out.println("Количество арифметических операций: " +
-                    calc.getClass().getMethod("getCountOperation").invoke(calc));
+        System.out.println("Количество арифметических операций: " +
+                new CalculatorWithCounterDecorator(
+                        new CalculatorWithMathExtends()).getCountOperation());
 
-            calc.getClass().getMethod("getCalculator").invoke(calc)
-                    .getClass().getMethod("saveToMemory")
-                    .invoke(calc.getClass().getMethod("getCalculator").invoke(calc));
+        new CalculatorWithMemoryDecorator(
+                new CalculatorWithMathExtends()).saveToMemory();
 
-            System.out.println("Значение из памяти: " +
-                    calc.getClass().getMethod("getCalculator").invoke(calc)
-                            .getClass().getMethod("getFromMemory")
-                            .invoke(calc.getClass().getMethod("getCalculator").invoke(calc)));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Значение из памяти: " +
+                new CalculatorWithMemoryDecorator(
+                        new CalculatorWithMathExtends()).getFromMemory());
     }
 }

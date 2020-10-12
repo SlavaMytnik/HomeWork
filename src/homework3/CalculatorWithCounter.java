@@ -3,20 +3,27 @@ package homework3;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static java.lang.Double.NaN;
+
 /**
  * Класс CalculatorWithCounter выполняет Задания 5.1 - 5.5 Урока 3
  * (подсчет количества использования калькулятора)
  */
 public class CalculatorWithCounter {
-    private Object obj;
-    private int countOperation = 0;
+    private CalculatorWithOperator calculator1;
+    private CalculatorWithMathCopy calculator2;
+    private CalculatorWithMathExtends calculator3;
+
+    private static int countOperation = 0;
+    private int calculatorNumber;
 
     /**
      * Метод CalculatorWithCounter является конструктором класса
      * @param obj принимает объект типа CalculatorWithOperator
      */
     public CalculatorWithCounter(CalculatorWithOperator obj) {
-        this.obj = obj;
+        calculator1 = obj;
+        calculatorNumber = 1;
     }
 
     /**
@@ -24,7 +31,8 @@ public class CalculatorWithCounter {
      * @param obj принимает объект типа CalculatorWithMathCopy
      */
     public CalculatorWithCounter(CalculatorWithMathCopy obj) {
-        this.obj = obj;
+        calculator2 = obj;
+        calculatorNumber = 2;
     }
 
     /**
@@ -32,7 +40,8 @@ public class CalculatorWithCounter {
      * @param obj принимает объект типа CalculatorWithMathExtends
      */
     public CalculatorWithCounter(CalculatorWithMathExtends obj) {
-        this.obj = obj;
+        calculator3 = obj;
+        calculatorNumber = 3;
     }
 
     /**
@@ -42,7 +51,18 @@ public class CalculatorWithCounter {
      * @return возвращает сумму двух чисел
      */
     public double sum(double a, double b) {
-        return getResultFromMethod(1, "sum", a, b, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.sum(a, b);
+            case 2:
+                return calculator2.sum(a, b);
+            case 3:
+                return calculator3.sum(a, b);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -52,7 +72,18 @@ public class CalculatorWithCounter {
      * @return возвращает разность двух чисел
      */
     public double diff(double a, double b) {
-        return getResultFromMethod(1, "diff", a, b, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.diff(a, b);
+            case 2:
+                return calculator2.diff(a, b);
+            case 3:
+                return calculator3.diff(a, b);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -62,7 +93,18 @@ public class CalculatorWithCounter {
      * @return возвращает результат деления двух чисел
      */
     public double div(double a, double b) {
-        return getResultFromMethod(1, "div", a, b, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.div(a, b);
+            case 2:
+                return calculator2.div(a, b);
+            case 3:
+                return calculator3.div(a, b);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -72,7 +114,18 @@ public class CalculatorWithCounter {
      * @return возвращает результат умножения двух чисел
      */
     public double mult(double a, double b) {
-        return getResultFromMethod(1, "mult", a, b, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.mult(a, b);
+            case 2:
+                return calculator2.mult(a, b);
+            case 3:
+                return calculator3.mult(a, b);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -81,7 +134,18 @@ public class CalculatorWithCounter {
      * @return возвращает модуль числа
      */
     public double abs(double a) {
-        return getResultFromMethod(2, "abs", a, 0, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.abs(a);
+            case 2:
+                return calculator2.abs(a);
+            case 3:
+                return calculator3.abs(a);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -90,7 +154,18 @@ public class CalculatorWithCounter {
      * @return возвращает корень числа
      */
     public double sqrt(double a) {
-        return getResultFromMethod(2, "sqrt", a, 0, 0);
+        countOperation++;
+
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.sqrt(a);
+            case 2:
+                return calculator2.sqrt(a);
+            case 3:
+                return calculator3.sqrt(a);
+            default:
+                return NaN;
+        }
     }
 
     /**
@@ -100,51 +175,18 @@ public class CalculatorWithCounter {
      * @return возвращает модуль числа
      */
     public double pow(double a, int power) {
-        return getResultFromMethod(3, "pow", a, 0, power);
-    }
-
-    /**
-     * Метод getResultFromMethod осуществляет расчет арифметического выражения
-     * @param flag определяет структуру вызываемого метода
-     * @param methodName - имя вызываемого метода
-     * @param a - первое число
-     * @param b - второе число
-     * @param power - степень числа
-     * @return возвращает результат расчета
-     */
-    private double getResultFromMethod(int flag, String methodName, double a, double b, int power) {
-        double result = 0;
-        Method callMethod;
-
-        try {
-            if (flag == 1) {
-                callMethod = obj.getClass().getMethod(methodName, double.class, double.class);
-            } else if (flag == 2) {
-                callMethod = obj.getClass().getMethod(methodName, double.class);
-            } else {
-                callMethod = obj.getClass().getMethod(methodName, double.class, int.class);
-            }
-
-            try {
-                if (flag == 1) {
-                    result = (double) callMethod.invoke(obj, a, b);
-                } else if (flag == 2) {
-                    result = (double) callMethod.invoke(obj, a);
-                } else {
-                    result = (double) callMethod.invoke(obj, a, power);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
         countOperation++;
 
-        return result;
+        switch (calculatorNumber) {
+            case 1:
+                return calculator1.pow(a, power);
+            case 2:
+                return calculator2.pow(a, power);
+            case 3:
+                return calculator3.pow(a, power);
+            default:
+                return NaN;
+        }
     }
 
     /**

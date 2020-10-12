@@ -48,9 +48,9 @@ public class CalculatorStringExpression {
         goAgain = true;
         pattern = Pattern
                 .compile("(\\([-?0-9\\.\\+\\*\\/\\^]+\\))|(\\|[-?0-9\\.\\+\\*\\/\\^]+\\|)");
+
         while (goAgain) {
             matcher = pattern.matcher(modifiedText);
-
             goAgain = false;
 
             if (matcher.find()) {
@@ -59,13 +59,13 @@ public class CalculatorStringExpression {
                 // Формирование заменяемого выражения без специальных символов
                 StringBuilder symbolsReplacer = new StringBuilder();
                 for (int i = 0; i < matcher.group().length(); i++) {
-                    if (matcher.group().substring(i, i + 1).equals("(") ||
-                            matcher.group().substring(i, i + 1).equals(")") ||
-                            matcher.group().substring(i, i + 1).equals("|") ||
-                            matcher.group().substring(i, i + 1).equals("+") ||
-                            matcher.group().substring(i, i + 1).equals("*") ||
-                            matcher.group().substring(i, i + 1).equals("/") ||
-                            matcher.group().substring(i, i + 1).equals("^")) {
+                    if (matcher.group().substring(i, i + 1).equals("(")
+                            || matcher.group().substring(i, i + 1).equals(")")
+                            || matcher.group().substring(i, i + 1).equals("|")
+                            || matcher.group().substring(i, i + 1).equals("+")
+                            || matcher.group().substring(i, i + 1).equals("*")
+                            || matcher.group().substring(i, i + 1).equals("/")
+                            || matcher.group().substring(i, i + 1).equals("^")) {
                         symbolsReplacer.append("\\");
                     }
 
@@ -92,6 +92,7 @@ public class CalculatorStringExpression {
         // Возведение в степень
         goAgain = true;
         pattern = Pattern.compile("([0-9]+\\.?([0-9]+)?)\\^(-?[0-9]+\\.?([0-9]+)?)");
+
         while (goAgain) {
             matcher = pattern.matcher(modifiedText);
             goAgain = false;
@@ -109,6 +110,7 @@ public class CalculatorStringExpression {
         // Умножение чисел
         goAgain = true;
         pattern = Pattern.compile("([0-9]+\\.?([0-9]+)?)\\*(-?[0-9]+\\.?([0-9]+)?)");
+
         while (goAgain) {
             matcher = pattern.matcher(modifiedText);
             goAgain = false;
@@ -126,6 +128,7 @@ public class CalculatorStringExpression {
         // Деление чисел
         goAgain = true;
         pattern = Pattern.compile("([0-9]+\\.?([0-9]+)?)\\/(-?[0-9]+\\.?([0-9]+)?)");
+
         while (goAgain) {
             matcher = pattern.matcher(modifiedText);
             goAgain = false;
@@ -143,6 +146,7 @@ public class CalculatorStringExpression {
         // Сложение и вычитание чисел
         goAgain = true;
         pattern = Pattern.compile("(-?[0-9]+\\.?([0-9]+)?)\\+(-?[0-9]+\\.?([0-9]+)?)");
+
         while (goAgain) {
 
             // Замена операции вычитания на сложение с минусом

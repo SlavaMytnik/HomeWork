@@ -6,7 +6,8 @@ package homework3;
  */
 public class CalculatorWithCounterInterface {
     private ICalculator obj;
-    private int countOperation = 0;
+
+    private static int countOperation = 0;
 
     /**
      * Метод CalculatorWithCounter является конструктором класса
