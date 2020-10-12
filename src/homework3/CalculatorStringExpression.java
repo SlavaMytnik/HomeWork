@@ -20,8 +20,6 @@ public class CalculatorStringExpression {
         System.out.println("Допустимые константы: PI, E");
         System.out.println("Арифметическое выражение можно вводить с пробелами или без");
 
-        System.out.println("***//**".matches("[\\**|\\/*]"));
-
         while (true) {
             System.out.print("Введите арифметическое выражение: ");
             enteredText = in.nextLine();
@@ -30,7 +28,8 @@ public class CalculatorStringExpression {
 
             // Проверка на ошибки во введенном выражении
             if (enteredText.length() == 0
-                    || enteredText.replaceAll("[-0-9\\^\\(\\)\\|\\*\\/\\+\\ ]", "").length() > 0) {
+                    || enteredText.replaceAll("[-0-9\\^\\(\\)\\|\\*\\/\\+\\ ]", "")
+                    .length() > 0) {
                 isError = true;
             }
 

@@ -17,7 +17,7 @@ public class CalculatorWithCounterMain {
                 calc.pow(calc.div(28, 5), 2));
 
         System.out.println("4.1 + 15 * 7 + (28 / 5) ^ 2 = " + result);
-        System.out.println("Количество арифметических операций: " +
-                calc.getCountOperation());
+        System.out.println("Количество арифметических операций: "
+                + calc.getCountOperation());
     }
 }

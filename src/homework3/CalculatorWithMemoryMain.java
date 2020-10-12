@@ -10,21 +10,21 @@ public class CalculatorWithMemoryMain {
         CalculatorWithMemory calc =
                 new CalculatorWithMemory(new CalculatorWithMathExtends());
 
-        System.out.println("4.1 + 15 * 7 + (28 / 5) ^ 2 = " +
-                calc.sum(calc.sum(4.1, calc.mult(15, 7)),
+        System.out.println("4.1 + 15 * 7 + (28 / 5) ^ 2 = "
+                + calc.sum(calc.sum(4.1, calc.mult(15, 7)),
                 calc.pow(calc.div(28, 5), 2)));
 
         calc.saveToMemory();
 
-        System.out.println("Значение из памяти: " +
-                calc.getFromMemory());
+        System.out.println("Значение из памяти: "
+                + calc.getFromMemory());
 
         // Пример для теста
         calc.sum(1.0, 2.0);
 
         // Результат отсутствует, т.к. память очищена при получении ее значения
-        System.out.println("Значение из памяти: " +
-                calc.getFromMemory());
+        System.out.println("Значение из памяти: "
+                + calc.getFromMemory());
 
         // Перезаписываем в память результат последней арифметической операции
         calc.saveToMemory();
@@ -33,7 +33,7 @@ public class CalculatorWithMemoryMain {
         calc.sum(5.0, 10.0);
 
         // 3.0
-        System.out.println("Значение из памяти: " +
-                calc.getFromMemory());
+        System.out.println("Значение из памяти: "
+                + calc.getFromMemory());
     }
 }
