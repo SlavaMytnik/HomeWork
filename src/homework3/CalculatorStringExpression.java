@@ -20,33 +20,39 @@ public class CalculatorStringExpression {
 
         System.out.println("Допустимые символы: (, ), |, ^, *, /, +, -");
         System.out.println("Допустимые константы: PI, E");
-        System.out.println("Арифметическое выражение можно вводить с пробелами или без");
+        System.out.println("Арифметическое выражение можно вводить с пробелами и без");
 
         while (true) {
             System.out.print("Введите арифметическое выражение: ");
             enteredText = in.nextLine()
-                    .replaceAll("PI", "" + Math.PI)
-                    .replaceAll("E", "" + Math.E)
+                    .replaceAll("PI", "@" + Math.PI + "@")
+                    .replaceAll("E", "@" + Math.E + "@")
                     .replaceAll("\\ +", "\\ ");
             isError = false;
 
             // Проверка на ошибки во введенном выражении
             if (enteredText.length() == 0
-                    || enteredText.replaceAll("[-0-9\\.\\^\\(\\)\\|\\*\\/\\+\\ ]", "").length() > 0
+                    || enteredText.replaceAll("[-0-9\\.\\^\\(\\)\\|\\*\\/\\+\\ @]", "").length() > 0
                     || enteredText.replaceAll("[-0-9\\.]\\ +[-0-9\\.]", "").length() < enteredText.length()) {
                 isError = true;
             } else {
                 enteredText = enteredText.replaceAll("\\ ", "");
 
-                if (enteredText.replaceAll("(\\-\\-)|(\\-\\+)|(\\-\\*)|(\\-\\/)|(\\-\\^)|(\\-\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\+\\+)|(\\+\\*)|(\\+\\/)|(\\+\\^)|(\\+\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\*\\+)|(\\*\\*)|(\\*\\/)|(\\*\\^)|(\\*\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\/\\+)|(\\/\\*)|(\\/\\/)|(\\/\\^)|(\\/\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\^\\+)|(\\^\\*)|(\\^\\/)|(\\^\\^)|(\\^\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\(\\+)|(\\(\\*)|(\\(\\/)|(\\(\\^)|(\\(\\))", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(^\\+)|(^\\*)|(^\\/)|(^\\))|(^\\+)|(^\\^)", "").length() < enteredText.length()
-                        || enteredText.replaceAll("(\\+$)|(\\-$)|(\\*$)|(\\/$)|(\\^$)|(\\($)", "").length() < enteredText.length()) {
+                if (enteredText.replaceAll("[-0-9\\.]\\@+[-0-9\\.]", "").length() < enteredText.length()) {
                     isError = true;
+                } else {
+                    enteredText = enteredText.replaceAll("@", "");
+
+                    if (enteredText.replaceAll("(\\-\\-)|(\\-\\+)|(\\-\\*)|(\\-\\/)|(\\-\\^)|(\\-\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\+\\+)|(\\+\\*)|(\\+\\/)|(\\+\\^)|(\\+\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\*\\+)|(\\*\\*)|(\\*\\/)|(\\*\\^)|(\\*\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\/\\+)|(\\/\\*)|(\\/\\/)|(\\/\\^)|(\\/\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\^\\+)|(\\^\\*)|(\\^\\/)|(\\^\\^)|(\\^\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\(\\+)|(\\(\\*)|(\\(\\/)|(\\(\\^)|(\\(\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(^\\+)|(^\\*)|(^\\/)|(^\\))|(^\\+)|(^\\^)", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\+$)|(\\-$)|(\\*$)|(\\/$)|(\\^$)|(\\($)", "").length() < enteredText.length()) {
+                        isError = true;
+                    }
                 }
             }
 
@@ -114,16 +120,16 @@ public class CalculatorStringExpression {
                                         "@" + powerText + "@");
 
                         // Возведение в степень значения после раскрытия скобок, если оно отрицательное
-                        boolean goAgain2 = true;
-                        Pattern pattern2 = Pattern.compile("@(-+[0-9]+\\.?([0-9]+)?)@\\^(-?[0-9]+\\.?([0-9]+)?)");
+                        boolean goAgainPower = true;
+                        Pattern patternPower = Pattern.compile("@(-+[0-9]+\\.?([0-9]+)?)@\\^(-?[0-9]+\\.?([0-9]+)?)");
 
-                        while (goAgain2) {
-                            matcher = pattern2.matcher(modifiedText);
-                            goAgain2 = false;
+                        while (goAgainPower) {
+                            matcher = patternPower.matcher(modifiedText);
+                            goAgainPower = false;
                             modifiedText = modifiedText.replaceAll("@", "");
 
                             if (matcher.find()) {
-                                goAgain2 = true;
+                                goAgainPower = true;
                                 modifiedText = modifiedText
                                         .replaceAll(matcher.group(1) + "\\^" + matcher.group(3),
                                                 "" + Math.pow(Double.parseDouble(matcher.group(1)),
@@ -144,7 +150,7 @@ public class CalculatorStringExpression {
             }
         }
 
-        // Возведение в степень 1
+        // Возведение в степень отрицательных чисел
         goAgain = true;
         pattern = Pattern.compile("(^|\\*|\\/)(-+[0-9]+\\.?([0-9]+)?)\\^(-?[0-9]+\\.?([0-9]+)?)");
 
@@ -162,7 +168,7 @@ public class CalculatorStringExpression {
             }
         }
 
-        // Возведение в степень 2
+        // Возведение в степень положительных чисел
         goAgain = true;
         pattern = Pattern.compile("([0-9]+\\.?([0-9]+)?)\\^(-?[0-9]+\\.?([0-9]+)?)");
 
@@ -239,6 +245,7 @@ public class CalculatorStringExpression {
 
         modifiedText = replacePlusMinus(modifiedText);
 
+        // Окончательная проверка на ошибку
         try {
             Double.parseDouble(modifiedText);
         } catch (NumberFormatException e) {
