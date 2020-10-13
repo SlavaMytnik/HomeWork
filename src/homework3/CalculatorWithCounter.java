@@ -1,8 +1,5 @@
 package homework3;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static java.lang.Double.NaN;
 
 /**
