@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
  * (калькулятор арифметического выражения, введенного с консоли)
  */
 public class CalculatorStringExpression {
+    private static final String ERROR_TEXT = "Ошибочный формат данных!";
+
     public static void main(String[] args) {
         boolean isError;
 
@@ -22,21 +24,36 @@ public class CalculatorStringExpression {
 
         while (true) {
             System.out.print("Введите арифметическое выражение: ");
-            enteredText = in.nextLine();
-
+            enteredText = in.nextLine()
+                    .replaceAll("PI", "" + Math.PI)
+                    .replaceAll("E", "" + Math.E)
+                    .replaceAll("\\ +", "\\ ");
             isError = false;
 
             // Проверка на ошибки во введенном выражении
             if (enteredText.length() == 0
-                    || enteredText.replaceAll("[-0-9\\^\\(\\)\\|\\*\\/\\+\\ ]", "")
-                    .length() > 0) {
+                    || enteredText.replaceAll("[-0-9\\.\\^\\(\\)\\|\\*\\/\\+\\ ]", "").length() > 0
+                    || enteredText.replaceAll("[-0-9\\.]\\ +[-0-9\\.]", "").length() < enteredText.length()) {
                 isError = true;
+            } else {
+                enteredText = enteredText.replaceAll("\\ ", "");
+
+                if (enteredText.replaceAll("(\\-\\-)|(\\-\\+)|(\\-\\*)|(\\-\\/)|(\\-\\^)|(\\-\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\+\\+)|(\\+\\*)|(\\+\\/)|(\\+\\^)|(\\+\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\*\\+)|(\\*\\*)|(\\*\\/)|(\\*\\^)|(\\*\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\/\\+)|(\\/\\*)|(\\/\\/)|(\\/\\^)|(\\/\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\^\\+)|(\\^\\*)|(\\^\\/)|(\\^\\^)|(\\^\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\(\\+)|(\\(\\*)|(\\(\\/)|(\\(\\^)|(\\(\\))", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(^\\+)|(^\\*)|(^\\/)|(^\\))|(^\\+)|(^\\^)", "").length() < enteredText.length()
+                        || enteredText.replaceAll("(\\+$)|(\\-$)|(\\*$)|(\\/$)|(\\^$)|(\\($)", "").length() < enteredText.length()) {
+                    isError = true;
+                }
             }
 
             if (!isError) {
                 System.out.println(goCalculate(enteredText));
             } else {
-                System.out.println("Ошибочный формат данных!");
+                System.out.println(ERROR_TEXT);
             }
         }
     }
@@ -49,15 +66,11 @@ public class CalculatorStringExpression {
     public static String goCalculate(String receivedText) {
         boolean goAgain;
 
-        // Замена констант и удаление пробелов
-        String modifiedText = receivedText
-                .replaceAll("PI", "" + Math.PI)
-                .replaceAll("E", "" + Math.E)
-                .replaceAll("\\ ", "");
-
         Pattern pattern;
 
         Matcher matcher;
+
+        String modifiedText = receivedText;
 
         // Раскрытие скобок или модуля
         goAgain = true;
@@ -88,10 +101,37 @@ public class CalculatorStringExpression {
                 }
 
                 if (matcher.group().substring(0, 1).equals("(")) {
-                    modifiedText = modifiedText
-                            .replaceAll(symbolsReplacer.toString(),
-                                    "" + goCalculate(matcher.group()
-                                            .substring(1, matcher.group().length() - 1)));
+                    double powerText = Double.parseDouble(goCalculate(matcher.group()
+                            .substring(1, matcher.group().length() - 1)));
+
+                    if (powerText > 0) {
+                        modifiedText = modifiedText
+                                .replaceAll(symbolsReplacer.toString(),
+                                        "" + powerText);
+                    } else {
+                        modifiedText = modifiedText
+                                .replaceAll(symbolsReplacer.toString(),
+                                        "@" + powerText + "@");
+
+                        // Возведение в степень значения после раскрытия скобок, если оно отрицательное
+                        boolean goAgain2 = true;
+                        Pattern pattern2 = Pattern.compile("@(-+[0-9]+\\.?([0-9]+)?)@\\^(-?[0-9]+\\.?([0-9]+)?)");
+
+                        while (goAgain2) {
+                            matcher = pattern2.matcher(modifiedText);
+                            goAgain2 = false;
+                            modifiedText = modifiedText.replaceAll("@", "");
+
+                            if (matcher.find()) {
+                                goAgain2 = true;
+                                modifiedText = modifiedText
+                                        .replaceAll(matcher.group(1) + "\\^" + matcher.group(3),
+                                                "" + Math.pow(Double.parseDouble(matcher.group(1)),
+                                                        Double.parseDouble(matcher.group(3))));
+                                modifiedText = replacePlusMinus(modifiedText);
+                            }
+                        }
+                    }
                 } else {
                     modifiedText = modifiedText
                             .replaceAll(symbolsReplacer.toString(),
@@ -104,7 +144,25 @@ public class CalculatorStringExpression {
             }
         }
 
-        // Возведение в степень
+        // Возведение в степень 1
+        goAgain = true;
+        pattern = Pattern.compile("(^|\\*|\\/)(-+[0-9]+\\.?([0-9]+)?)\\^(-?[0-9]+\\.?([0-9]+)?)");
+
+        while (goAgain) {
+            matcher = pattern.matcher(modifiedText);
+            goAgain = false;
+
+            if (matcher.find()) {
+                goAgain = true;
+                modifiedText = modifiedText
+                        .replaceAll(matcher.group(2) + "\\^" + matcher.group(4),
+                                "" + Math.pow(Double.parseDouble(matcher.group(2)),
+                                        Double.parseDouble(matcher.group(4))));
+                modifiedText = replacePlusMinus(modifiedText);
+            }
+        }
+
+        // Возведение в степень 2
         goAgain = true;
         pattern = Pattern.compile("([0-9]+\\.?([0-9]+)?)\\^(-?[0-9]+\\.?([0-9]+)?)");
 
@@ -180,6 +238,12 @@ public class CalculatorStringExpression {
         }
 
         modifiedText = replacePlusMinus(modifiedText);
+
+        try {
+            Double.parseDouble(modifiedText);
+        } catch (NumberFormatException e) {
+            return ERROR_TEXT;
+        }
 
         return modifiedText;
     }
