@@ -16,22 +16,19 @@ public class CalculatorWithCounterAndMemoryDecoratorMain {
                 + calc.sum(calc.sum(4.1, calc.mult(15, 7)),
                 calc.pow(calc.div(28, 5), 2)));
 
-        try {
-            System.out.println("Количество арифметических операций: " +
-                    calc.getClass().getMethod("getCountOperation").invoke(calc));
-            calc.getClass().getMethod("getCalculator").invoke(calc)
-                    .getClass().getMethod("saveToMemory")
-                    .invoke(calc.getClass().getMethod("getCalculator").invoke(calc));
-            System.out.println("Значение из памяти: " +
-                    calc.getClass().getMethod("getCalculator").invoke(calc)
-                            .getClass().getMethod("getFromMemory")
-                            .invoke(calc.getClass().getMethod("getCalculator").invoke(calc)));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        if (calc instanceof CalculatorWithCounterDecorator) {
+            CalculatorWithCounterDecorator calcCounter = (CalculatorWithCounterDecorator) calc;
+
+            System.out.println("Количество арифметических операций: "
+                    + calcCounter.getCountOperation());
+
+            if (calcCounter.getCalculator() instanceof CalculatorWithMemoryDecorator) {
+                CalculatorWithMemoryDecorator calcMemory =
+                        (CalculatorWithMemoryDecorator) calcCounter.getCalculator();
+
+                calcMemory.saveToMemory();
+                System.out.println("Значение из памяти: " + calcMemory.getFromMemory());
+            }
         }
     }
 }
