@@ -33,21 +33,21 @@ public class CalculatorStringExpression {
             // Проверка на ошибки во введенном выражении
             if (enteredText.length() == 0
                     || enteredText.replaceAll("[-0-9\\.\\^\\(\\)\\|\\*\\/\\+\\ @]", "").length() > 0
-                    || enteredText.replaceAll("[-0-9\\.]\\ +[-0-9\\.]", "").length() < enteredText.length()) {
+                    || enteredText.replaceAll("[0-9\\.]\\ +[0-9\\.]", "").length() < enteredText.length()) {
                 isError = true;
             } else {
                 enteredText = enteredText.replaceAll("\\ ", "");
 
-                if (enteredText.replaceAll("[-0-9\\.]\\@+[-0-9\\.]", "").length() < enteredText.length()) {
+                if (enteredText.replaceAll("[0-9\\.]\\@+[0-9\\.]", "").length() < enteredText.length()) {
                     isError = true;
                 } else {
                     enteredText = enteredText.replaceAll("@", "");
 
                     if (enteredText.replaceAll("(\\-\\-)|(\\-\\+)|(\\-\\*)|(\\-\\/)|(\\-\\^)|(\\-\\))", "").length() < enteredText.length()
-                            || enteredText.replaceAll("(\\+\\+)|(\\+\\*)|(\\+\\/)|(\\+\\^)|(\\+\\))", "").length() < enteredText.length()
-                            || enteredText.replaceAll("(\\*\\+)|(\\*\\*)|(\\*\\/)|(\\*\\^)|(\\*\\))", "").length() < enteredText.length()
-                            || enteredText.replaceAll("(\\/\\+)|(\\/\\*)|(\\/\\/)|(\\/\\^)|(\\/\\))", "").length() < enteredText.length()
-                            || enteredText.replaceAll("(\\^\\+)|(\\^\\*)|(\\^\\/)|(\\^\\^)|(\\^\\))", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\+\\+)|(\\+\\*)|(\\+\\/)|(\\+\\^)|(\\+\\))|(\\+\\-)", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\*\\+)|(\\*\\*)|(\\*\\/)|(\\*\\^)|(\\*\\))|(\\*\\-)", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\/\\+)|(\\/\\*)|(\\/\\/)|(\\/\\^)|(\\/\\))|(\\/\\-)", "").length() < enteredText.length()
+                            || enteredText.replaceAll("(\\^\\+)|(\\^\\*)|(\\^\\/)|(\\^\\^)|(\\^\\))|(\\^\\-)", "").length() < enteredText.length()
                             || enteredText.replaceAll("(\\(\\+)|(\\(\\*)|(\\(\\/)|(\\(\\^)|(\\(\\))", "").length() < enteredText.length()
                             || enteredText.replaceAll("(^\\+)|(^\\*)|(^\\/)|(^\\))|(^\\+)|(^\\^)", "").length() < enteredText.length()
                             || enteredText.replaceAll("(\\+$)|(\\-$)|(\\*$)|(\\/$)|(\\^$)|(\\($)", "").length() < enteredText.length()) {

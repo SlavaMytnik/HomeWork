@@ -17,20 +17,10 @@ public class Task6 {
      * Метод createPhoneNumber осуществляет преобразование и
      * вывод на печать массива чисел в формате телефонного номера
      */
-    public static String createPhoneNumber(int[] receivedPhoneNumberArray) {
+    public static String createPhoneNumber(int[] arr) {
 
-        /* Преобразование массива чисел в строку и
-        удаление из нее скобок, запятых и пробелов */
-        String result = Arrays.toString(receivedPhoneNumberArray).
-                replaceAll("\\[|\\]|,|\\ ", "");
-
-        // Преобразование строки в формат телефонного номера (Вариант 1)
-        result = result.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
-
-        /* Преобразование строки в формат телефонного номера (Вариант 2, закомментирован)
-        result = String.format("(%s) %s-%s", result.substring(0, 3), result.substring(3, 6),
-                result.substring(6, 10)); */
-
-        return result;
+        return String.format("(%d%d%d) %d%d%d-%d%d%d%d",
+                arr[0], arr[1], arr[2], arr[3], arr[4],
+                arr[5], arr[6], arr[7], arr[8], arr[9]);
     }
 }

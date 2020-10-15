@@ -9,11 +9,7 @@ public class Task4 {
         boolean isWeekday = true;
         boolean isVacation = true;
 
-        if (sleepln(isWeekday, isVacation)) {
-            System.out.println("Спать...");
-        } else {
-            System.out.println("Подъем!");
-        }
+        System.out.println(sleepln(isWeekday, isVacation) ? "Спать..." : "Подъем!");
     }
 
     /**
@@ -22,9 +18,6 @@ public class Task4 {
     public static boolean sleepln(boolean weekday, boolean vacation) {
 
         // Если не рабочий день или отпуск, то можно спать
-        if (!weekday || vacation) {
-            return true;
-        }
-        return false;
+        return (!weekday || vacation) ? true : false;
     }
 }
