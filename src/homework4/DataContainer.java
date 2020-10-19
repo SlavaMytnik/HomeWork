@@ -130,9 +130,9 @@ public class DataContainer<T> {
      */
     static void sort(DataContainer<? extends Comparable> container) {
         if (container != null) {
-            DataContainer MyContainer = container;
+            DataContainer myContainer = container;
 
-            MyContainer.sort(new Cmp());
+            myContainer.sort(new Cmp());
         }
     }
 
@@ -143,9 +143,9 @@ public class DataContainer<T> {
      */
     static void sort(DataContainer<? extends Comparable> container, Comparator<? extends Comparable> comparator) {
         if (container != null && comparator != null) {
-            DataContainer MyContainer = container;
+            DataContainer myContainer = container;
 
-            MyContainer.sort(comparator);
+            myContainer.sort(comparator);
         }
     }
 
