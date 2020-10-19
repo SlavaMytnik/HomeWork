@@ -143,7 +143,8 @@ public class DataContainer<T> {
      * @param comparator - объект реализации сравнения
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    static void sort(DataContainer<? extends Comparable> container, Comparator<? extends Comparable> comparator) {
+    static void sort(DataContainer<? extends Comparable> container,
+                     Comparator<? extends Comparable> comparator) {
         if (container != null && comparator != null) {
             DataContainer myContainer = container;
 
@@ -175,10 +176,3 @@ public class DataContainer<T> {
     }
 
 }
-
-
-
-
-
-
-
