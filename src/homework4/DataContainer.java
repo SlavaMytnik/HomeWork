@@ -128,6 +128,7 @@ public class DataContainer<T> {
      * Метод sort сортирует элементы массива
      * @param container - массив элементов
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     static void sort(DataContainer<? extends Comparable> container) {
         if (container != null) {
             DataContainer myContainer = container;
@@ -141,6 +142,7 @@ public class DataContainer<T> {
      * @param container - массив элементов
      * @param comparator - объект реализации сравнения
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     static void sort(DataContainer<? extends Comparable> container, Comparator<? extends Comparable> comparator) {
         if (container != null && comparator != null) {
             DataContainer myContainer = container;
