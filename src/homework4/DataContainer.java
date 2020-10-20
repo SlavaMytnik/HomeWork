@@ -14,7 +14,7 @@ public class DataContainer<T> {
      * @param item - принимаемый элемент
      * @return возвращеает индекс добавленного элемента в массиве
      */
-    int add(T item) {
+    public int add(T item) {
         if (item == null) {
             return -1;
         }
@@ -36,7 +36,7 @@ public class DataContainer<T> {
      * @param index - индекс удаляемого элемента массива
      * @return возвращает информацию об успешности удаления элемента массива
      */
-    boolean delete(int index) {
+    public boolean delete(int index) {
         if (index < 0 || (this.data.length - 1) < index) {
             return false;
         }
@@ -56,7 +56,7 @@ public class DataContainer<T> {
      * @param item - значение удаляемого элемента массива
      * @return возвращает информацию об успешности удаления элемента массива
      */
-    boolean delete(T item) {
+    public boolean delete(T item) {
         boolean isFind = false;
 
         for (int i = 0; i < this.data.length; i++) {
@@ -81,7 +81,7 @@ public class DataContainer<T> {
      * @param index - индекс элемента массива
      * @return возвращает значение элемента массива
      */
-    T get(int index) {
+    public T get(int index) {
         return ((this.data.length - 1) < index) ? null : this.data[index];
     }
 
@@ -89,7 +89,7 @@ public class DataContainer<T> {
      * Метод getItems возвращает массив элементов
      * @return возвращает массив элементов
      */
-    T[] getItems() {
+    public T[] getItems() {
         return this.data;
     }
 
@@ -97,7 +97,7 @@ public class DataContainer<T> {
      * Метод sort сортирует элементы массива
      * @param comparator - объект реализации сравнения
      */
-    void sort(Comparator<T> comparator) {
+    public void sort(Comparator<T> comparator) {
         if (comparator != null && this.data.length > 1) {
             int left = 0;
             int right = this.data.length - 1;
@@ -129,7 +129,7 @@ public class DataContainer<T> {
      * @param container - массив элементов
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    static void sort(DataContainer<? extends Comparable> container) {
+    public static void sort(DataContainer<? extends Comparable> container) {
         if (container != null) {
             DataContainer myContainer = container;
 
@@ -143,7 +143,7 @@ public class DataContainer<T> {
      * @param comparator - объект реализации сравнения
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    static void sort(DataContainer<? extends Comparable> container,
+    public static void sort(DataContainer<? extends Comparable> container,
                      Comparator<? extends Comparable> comparator) {
         if (container != null && comparator != null) {
             DataContainer myContainer = container;
