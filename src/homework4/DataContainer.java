@@ -26,9 +26,9 @@ public class DataContainer<T> {
             }
         }
 
-        this.data = Arrays.copyOf(data, data.length + 1);
+        this.data = Arrays.copyOf(this.data, this.data.length + 1);
         this.data[this.data.length - 1] = item;
-        return data.length - 1;
+        return this.data.length - 1;
     }
 
     /**
@@ -82,7 +82,8 @@ public class DataContainer<T> {
      * @return возвращает значение элемента массива
      */
     public T get(int index) {
-        return (index < 0 || (this.data.length - 1) < index) ? null : this.data[index];
+        return (index < 0 || (this.data.length - 1) < index)
+                ? null : this.data[index];
     }
 
     /**
