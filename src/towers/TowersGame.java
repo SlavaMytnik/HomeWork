@@ -9,7 +9,7 @@ public class TowersGame {
     private int gameType;
     private int towersCount;
     private int circlesCount;
-    private int circles[][];
+    private int[][] circles;
     private int sleepMillis = 0;
 
     private static Scanner scanner = new Scanner(System.in);
@@ -123,7 +123,7 @@ public class TowersGame {
     }
 
     public void setCirclesCount(String textForUser, String textForError) {
-        circlesCount = setGameVariables(textForUser, textForError, 3, 20);
+        circlesCount = setGameVariables(textForUser, textForError, 3, 8);
 
         if (towersCount > circlesCount) {
             towersCount = circlesCount;
