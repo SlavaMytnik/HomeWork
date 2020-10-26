@@ -11,10 +11,11 @@ public class TowersGameMain {
                 "Ошибка ввода!");
         game.setTowersCount("Введите количество башен от 3 до 8: ",
                 "Ошибка ввода!");
-        game.setCirclesCount("Введите количество колец от 3 до 8: ",
+        game.setCirclesCount("Введите количество колец от 3 до 20: ",
                 "Ошибка ввода!");
 
-        game.setSleepMillis(0);
+        game.setSleepMillis(2000);
+        game.setRules(true);
         game.start();
         game.printField();
 
