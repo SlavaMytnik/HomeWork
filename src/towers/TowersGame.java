@@ -8,6 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TowersGame implements Serializable {
+    public static final String FILE_PATH = "saved_towers_games";
+    public static final String FILE_TYPE = ".towers";
+
     private boolean isRules = false;
     private boolean isExit = false;
 
@@ -363,12 +366,12 @@ public class TowersGame implements Serializable {
         try {
             isExit = false;
 
-            File file = new File("saved_towers_games");
+            File file = new File(FILE_PATH);
 
             if (!file.exists()) {
                 file.mkdir();
             }
-            file = new File(file, gameName + ".towers");
+            file = new File(file, gameName + FILE_TYPE);
 
             ObjectOutputStream objectStream = new ObjectOutputStream(new FileOutputStream(file));
             objectStream.writeObject(this);
@@ -386,7 +389,7 @@ public class TowersGame implements Serializable {
         }
 
         try {
-            File file = new File("saved_towers_games", gameName + ".towers");
+            File file = new File(FILE_PATH, gameName + FILE_TYPE);
             ObjectInputStream objectStream = new ObjectInputStream(
                     new FileInputStream(file));
             TowersGame loadedObject = (TowersGame) objectStream.readObject();
@@ -405,4 +408,28 @@ public class TowersGame implements Serializable {
 
         return false;
     }
+
+    public List<String> getGameNames() {
+        try {
+            List<String> filesList = new ArrayList<>();
+
+            File[] files = new File(FILE_PATH).listFiles();
+
+            for (File file : files) {
+                if (file.isFile() && file.toString().endsWith(FILE_TYPE)) {
+                    filesList.add(file.toString()
+                            .replaceAll(FILE_PATH + "\\\\", "")
+                            .replaceAll("\\" + FILE_TYPE, ""));
+                }
+            }
+
+            return filesList;
+        } catch (Exception ignored) {}
+
+        return null;
+    }
 }
+
+
+
+

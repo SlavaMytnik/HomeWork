@@ -88,6 +88,15 @@ public class TowersGameMain {
         }
 
         if (game.getGameType() == 1 && game.getManualGameType() == 2) {
+            List<String> gameNames = game.getGameNames();
+
+            if (gameNames != null) {
+                System.out.println("Существующие игры: ");
+                for (String name : gameNames) {
+                    System.out.println("\u001B[34m" + name + "\u001B[0m");
+                }
+            }
+
             do {
                 isCorrect = false;
                 System.out.print("Введите название игры: ");
