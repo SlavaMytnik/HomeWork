@@ -1,15 +1,19 @@
 package towers;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TowersGame {
+public class TowersGame implements Serializable {
     private boolean isRules = false;
+    private boolean isExit = false;
 
     private int gameType = 1;
     private int manualGameType = 1;
-    private int[][] circles;
+    private int[][] circles = null;
     private int sleepMillis = 0;
     private int stepsCount = 0;
 
@@ -21,7 +25,10 @@ public class TowersGame {
     private int maxCirclesCount = 20;
     private int circlesCount = 3;
 
-    private String generatedStepString = "";
+    private String generatedStep = "";
+    private String exitText = "EXIT";
+
+    private List<String> savedSteps;
 
     public TowersGame() {
     }
@@ -33,13 +40,16 @@ public class TowersGame {
         setCirclesCount(circlesCount);
     }
 
-    public boolean setRules(boolean rules) {
-        isRules = rules;
-        return true;
+    public void setRules(boolean isRules) {
+        this.isRules = isRules;
+    }
+
+    public void setIsExit(boolean isExit) {
+        this.isExit = isExit;
     }
 
     public boolean setGameType(int gameType) {
-        if (gameType == 1 || gameType == 2) {
+        if (circles == null && (gameType == 1 || gameType == 2)) {
             this.gameType = gameType;
             return true;
         }
@@ -47,7 +57,7 @@ public class TowersGame {
     }
 
     public boolean setManualGameType(int manualGameType) {
-        if (manualGameType == 1 || manualGameType == 2 || manualGameType == 3) {
+        if (circles == null && (manualGameType == 1 || manualGameType == 2 || manualGameType == 3)) {
             this.manualGameType = manualGameType;
             return true;
         }
@@ -79,7 +89,7 @@ public class TowersGame {
     }
 
     public boolean setTowersCount(int towersCount) {
-        if (towersCount >= minCirclesCount && towersCount <= maxTowersCount) {
+        if (circles == null && (towersCount >= minCirclesCount && towersCount <= maxTowersCount)) {
             this.towersCount = towersCount;
             return true;
         }
@@ -103,15 +113,28 @@ public class TowersGame {
     }
 
     public boolean setCirclesCount(int circlesCount) {
-        if (circlesCount >= minCirclesCount && circlesCount <= maxCirclesCount) {
+        if (circles == null && (circlesCount >= minCirclesCount && circlesCount <= maxCirclesCount)) {
             this.circlesCount = circlesCount;
             return true;
         }
         return false;
     }
 
-    public boolean isRules() {
+    public boolean setExitText(String exitText) {
+        if (exitText.matches("[a-zA-Z]+")) {
+            this.exitText = exitText;
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean getIsRules() {
         return isRules;
+    }
+
+    public boolean getIsExit() {
+        return isExit;
     }
 
     public int getGameType() {
@@ -154,8 +177,16 @@ public class TowersGame {
         return circlesCount;
     }
 
-    public String getGeneratedStepString() {
-        return generatedStepString;
+    public String getGeneratedStep() {
+        return generatedStep;
+    }
+
+    public String getExitText() {
+        return exitText;
+    }
+
+    public List<String> getSavedSteps() {
+        return savedSteps;
     }
 
     public void start() {
@@ -174,6 +205,9 @@ public class TowersGame {
                 }
             }
         }
+
+        savedSteps = new ArrayList<>();
+        stepsCount = 0;
     }
 
     public boolean step(int fromValue, int toValue) {
@@ -187,16 +221,23 @@ public class TowersGame {
             e.printStackTrace();
         }
 
-        generatedStepString = (new Random().nextInt(towersCount) + 1)
+        generatedStep = (new Random().nextInt(towersCount) + 1)
                 + "->" + (new Random().nextInt(towersCount) + 1);
 
-        return step(generatedStepString);
+        return step(generatedStep);
     }
 
-    public boolean step(String consoleString) {
+    public boolean step(String consoleText) {
+        if (consoleText.equals(exitText)) {
+            isExit = true;
+
+            return false;
+        }
+
+        savedSteps.add(consoleText);
         stepsCount++;
 
-        if (checkStep(consoleString)) {
+        if (circles != null && checkStep(consoleText)) {
             int fromTower = -1;
             int toTower = -1;
             int fromCircle = -1;
@@ -205,7 +246,7 @@ public class TowersGame {
             int toValue = circlesCount;
 
             Pattern pattern = Pattern.compile("([0-9]+)->([0-9]+)");
-            Matcher matcher = pattern.matcher(consoleString);
+            Matcher matcher = pattern.matcher(consoleText);
 
             if (matcher.find()) {
                 fromTower = Integer.parseInt(matcher.group(1)) - 1;
@@ -280,6 +321,10 @@ public class TowersGame {
     }
 
     public boolean isContinue() {
+        if (isExit) {
+            return false;
+        }
+
         for (int j = 1; j < towersCount; j++) {
             int factorial1 = 0;
             int factorial2 = 0;
@@ -308,5 +353,33 @@ public class TowersGame {
                 System.out.println(text.toString());
             }
         }
+    }
+
+    public boolean save() {
+        try {
+            isExit = false;
+
+            ObjectOutputStream objectStream = new ObjectOutputStream(
+                    new FileOutputStream("object.tower"));
+            objectStream.writeObject(this);
+            objectStream.close();
+
+            return true;
+        } catch (IOException ignored) {}
+
+        return false;
+    }
+
+    public TowersGame load() {
+        try {
+            ObjectInputStream objectStream = new ObjectInputStream(
+                    new FileInputStream("object.tower"));
+            TowersGame loadedObject = (TowersGame) objectStream.readObject();
+            objectStream.close();
+
+            return loadedObject;
+        } catch (IOException | ClassNotFoundException ignored) {}
+
+        return null;
     }
 }
