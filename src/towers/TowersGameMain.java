@@ -10,6 +10,7 @@ public class TowersGameMain {
         TowersGame game = new TowersGame();
 
         String consoleText = "";
+        String gameName = "";
 
         boolean isCorrect;
         boolean isNewSteps = false;
@@ -87,7 +88,22 @@ public class TowersGameMain {
         }
 
         if (game.getGameType() == 1 && game.getManualGameType() == 2) {
-            if ((game = game.load()) != null && game != null) {
+            do {
+                isCorrect = false;
+                System.out.print("Введите название игры: ");
+                if (scanner.hasNext()) {
+                    try {
+                        gameName = scanner.nextLine();
+                        isCorrect = game.checkGameName(gameName);
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+                if (!isCorrect) {
+                    System.out.println("Ошибка ввода!");
+                }
+            } while (!isCorrect);
+
+            if ((game = game.load(gameName)) != null && game != null) {
                 List<String> loadedSteps = game.getSavedSteps();
 
                 game.start();
@@ -164,7 +180,22 @@ public class TowersGameMain {
             } while (!isCorrect);
 
             if (console == 1) {
-                if (game.save()) {
+                do {
+                    isCorrect = false;
+                    System.out.print("Введите название игры: ");
+                    if (scanner.hasNext()) {
+                        try {
+                            gameName = scanner.nextLine();
+                            isCorrect = game.checkGameName(gameName);
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+                    if (!isCorrect) {
+                        System.out.println("Ошибка ввода!");
+                    }
+                } while (!isCorrect);
+
+                if (game.save(gameName)) {
                     System.out.println("Игра сохранена!");
                 } else {
                     System.out.println("Ошибка записи файла!");

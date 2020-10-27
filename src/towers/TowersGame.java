@@ -57,7 +57,7 @@ public class TowersGame implements Serializable {
     }
 
     public boolean setManualGameType(int manualGameType) {
-        if (circles == null && (manualGameType == 1 || manualGameType == 2 || manualGameType == 3)) {
+        if (circles == null && (manualGameType == 1 || manualGameType == 2)) {
             this.manualGameType = manualGameType;
             return true;
         }
@@ -355,12 +355,22 @@ public class TowersGame implements Serializable {
         }
     }
 
-    public boolean save() {
+    public boolean save(String gameName) {
+        if (!checkGameName(gameName)) {
+            return false;
+        }
+
         try {
             isExit = false;
 
-            ObjectOutputStream objectStream = new ObjectOutputStream(
-                    new FileOutputStream("object.tower"));
+            File file = new File("saved_towers_games");
+
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(file, gameName + ".towers");
+
+            ObjectOutputStream objectStream = new ObjectOutputStream(new FileOutputStream(file));
             objectStream.writeObject(this);
             objectStream.close();
 
@@ -370,10 +380,15 @@ public class TowersGame implements Serializable {
         return false;
     }
 
-    public TowersGame load() {
+    public TowersGame load(String gameName) {
+        if (!checkGameName(gameName)) {
+            return null;
+        }
+
         try {
+            File file = new File("saved_towers_games", gameName + ".towers");
             ObjectInputStream objectStream = new ObjectInputStream(
-                    new FileInputStream("object.tower"));
+                    new FileInputStream(file));
             TowersGame loadedObject = (TowersGame) objectStream.readObject();
             objectStream.close();
 
@@ -381,5 +396,13 @@ public class TowersGame implements Serializable {
         } catch (IOException | ClassNotFoundException ignored) {}
 
         return null;
+    }
+
+    public boolean checkGameName(String gameName) {
+        if (gameName.matches("[1-9a-zA-Z]+")) {
+            return true;
+        }
+
+        return false;
     }
 }
