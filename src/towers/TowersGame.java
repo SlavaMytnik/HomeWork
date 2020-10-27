@@ -1,15 +1,14 @@
 package towers;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TowersGame implements Serializable {
     public static final String FILE_PATH = "saved_towers_games";
     public static final String FILE_TYPE = ".towers";
+    public static final String FILE_TYPE_FINISHED = ".finished";
 
     private boolean isRules = false;
     private boolean isExit = false;
@@ -364,6 +363,12 @@ public class TowersGame implements Serializable {
         }
 
         try {
+            String typeFinished = "";
+
+            if (!isExit) {
+                typeFinished = FILE_TYPE_FINISHED;
+            }
+
             isExit = false;
 
             File file = new File(FILE_PATH);
@@ -371,7 +376,7 @@ public class TowersGame implements Serializable {
             if (!file.exists()) {
                 file.mkdir();
             }
-            file = new File(file, gameName + FILE_TYPE);
+            file = new File(file, gameName + FILE_TYPE + typeFinished);
 
             ObjectOutputStream objectStream = new ObjectOutputStream(new FileOutputStream(file));
             objectStream.writeObject(this);
@@ -387,6 +392,16 @@ public class TowersGame implements Serializable {
         if (!checkGameName(gameName)) {
             return null;
         }
+
+        try {
+            File file = new File(FILE_PATH, gameName + FILE_TYPE + FILE_TYPE_FINISHED);
+            ObjectInputStream objectStream = new ObjectInputStream(
+                    new FileInputStream(file));
+            TowersGame loadedObject = (TowersGame) objectStream.readObject();
+            objectStream.close();
+
+            return loadedObject;
+        } catch (IOException | ClassNotFoundException ignored) {}
 
         try {
             File file = new File(FILE_PATH, gameName + FILE_TYPE);
@@ -409,21 +424,27 @@ public class TowersGame implements Serializable {
         return false;
     }
 
-    public List<String> getGameNames() {
+    public Map<String, Integer> getGameNames() {
         try {
-            List<String> filesList = new ArrayList<>();
+            Map<String, Integer> filesMap = new TreeMap<>();
 
             File[] files = new File(FILE_PATH).listFiles();
 
             for (File file : files) {
                 if (file.isFile() && file.toString().endsWith(FILE_TYPE)) {
-                    filesList.add(file.toString()
+                    filesMap.put(file.toString()
                             .replaceAll(FILE_PATH + "\\\\", "")
-                            .replaceAll("\\" + FILE_TYPE, ""));
+                            .replaceAll("\\" + FILE_TYPE, ""), 0);
+                }
+
+                if (file.isFile() && file.toString().endsWith(FILE_TYPE + FILE_TYPE_FINISHED)) {
+                    filesMap.put(file.toString()
+                            .replaceAll(FILE_PATH + "\\\\", "")
+                            .replaceAll("\\" + FILE_TYPE + "\\" + FILE_TYPE_FINISHED, ""), 1);
                 }
             }
 
-            return filesList;
+            return filesMap;
         } catch (Exception ignored) {}
 
         return null;
