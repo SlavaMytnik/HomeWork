@@ -372,11 +372,24 @@ public class TowersGame implements Serializable {
             isExit = false;
 
             File file = new File(FILE_PATH);
-
             if (!file.exists()) {
                 file.mkdir();
             }
-            file = new File(file, gameName + FILE_TYPE + typeFinished);
+
+            file = new File(FILE_PATH, gameName + FILE_TYPE);
+            if (file.exists()) {
+                file.delete();
+            }
+
+            file = new File(FILE_PATH, gameName + FILE_TYPE + FILE_TYPE_FINISHED);
+            if (file.exists()) {
+                file.delete();
+            }
+
+            file = new File(FILE_PATH, gameName + FILE_TYPE + typeFinished);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
             ObjectOutputStream objectStream = new ObjectOutputStream(new FileOutputStream(file));
             objectStream.writeObject(this);

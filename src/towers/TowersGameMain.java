@@ -1,6 +1,5 @@
 package towers;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -93,7 +92,7 @@ public class TowersGameMain {
             Map<String, Integer> gameNames = game.getGameNames();
 
             if (gameNames != null) {
-                System.out.println("Существующие игры: ");
+                System.out.println("Существующие игры (\u001B[31mзавершенные\u001B[0m, \u001B[32mнезавершенные\u001B[0m): ");
                 for (String name : gameNames.keySet()) {
                     if (gameNames.get(name) == 0) {
                         System.out.println("\u001B[32m" + name + "\u001B[0m");
