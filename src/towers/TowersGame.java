@@ -436,7 +436,7 @@ public class TowersGame implements Serializable {
     }
 
     public boolean checkGameName(String gameName) {
-        if (gameName.matches("[1-9a-zA-Z]+")) {
+        if (gameName.matches("[0-9a-zA-Z]+")) {
             return true;
         }
 

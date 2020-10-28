@@ -15,6 +15,7 @@ public class TowersGameMain {
 
         boolean isCorrect;
         boolean isNewSteps = false;
+        boolean isExit = false;
 
         game.setExitText("EXIT");
         game.setRules(true);
@@ -91,7 +92,7 @@ public class TowersGameMain {
         if (game.getGameType() == 1 && game.getManualGameType() == 2) {
             Map<String, Integer> gameNames = game.getGameNames();
 
-            if (gameNames != null) {
+            if (gameNames != null && !gameNames.isEmpty()) {
                 System.out.println("Сохраненные игры (\u001B[31mзавершенные\u001B[0m, \u001B[32mнезавершенные\u001B[0m): ");
                 for (String name : gameNames.keySet()) {
                     if (gameNames.get(name) == 1) {
@@ -100,100 +101,7 @@ public class TowersGameMain {
                         System.out.println("\u001B[31m" + name + "\u001B[0m");
                     }
                 }
-            }
 
-            do {
-                isCorrect = false;
-                System.out.print("Введите название игры: ");
-                if (scanner.hasNext()) {
-                    try {
-                        gameName = scanner.nextLine();
-                        isCorrect = game.checkGameName(gameName);
-                    } catch (NumberFormatException ignored) {
-                    }
-                }
-                if (!isCorrect) {
-                    System.out.println("Ошибка ввода!");
-                }
-            } while (!isCorrect);
-
-            if ((game = game.load(gameName)) != null && game != null) {
-                List<String> loadedSteps = game.getSavedSteps();
-
-                game.start();
-                game.printField();
-
-                for (String s : loadedSteps) {
-                    System.out.print("Сделайте ход: ");
-                    System.out.println(s);
-
-                    isCorrect = game.step(s);
-
-                    if (isCorrect) {
-                        game.printField();
-                    } else {
-                        System.out.println("Ход невозможен!");
-                    }
-                }
-            } else {
-                System.out.println("Ошибка чтения файла!");
-            }
-        }
-
-        while (game != null && game.isContinue()) {
-            isNewSteps = true;
-            System.out.print("Сделайте ход: ");
-
-            if (game.getGameType() == 1) {
-                if (scanner.hasNext()) {
-                    try {
-                        consoleText = scanner.nextLine();
-                    } catch (NumberFormatException ignored) {
-                    }
-                }
-
-                isCorrect = game.step(consoleText);
-            } else {
-                isCorrect = game.step();
-                System.out.println(game.getGeneratedStep());
-            }
-
-            if (!game.getIsExit()) {
-                if (isCorrect) {
-                    game.printField();
-                } else {
-                    System.out.println("Ход невозможен!");
-                }
-            }
-        }
-
-        if (game != null && !game.getIsExit()) {
-            System.out.println("Победа!");
-            System.out.println("Количество шагов: " + game.getStepsCount());
-        }
-
-        if (isNewSteps) {
-            int console = 0;
-
-            do {
-                isCorrect = false;
-                System.out.print("Сохранить игру: 1 - да, 2 - нет: ");
-                if (scanner.hasNext()) {
-                    try {
-                        console = Integer.parseInt(scanner.nextLine());
-
-                        if (console == 1 || console == 2) {
-                            isCorrect = true;
-                        }
-                    } catch (NumberFormatException ignored) {
-                    }
-                }
-                if (!isCorrect) {
-                    System.out.println("Ошибка ввода!");
-                }
-            } while (!isCorrect);
-
-            if (console == 1) {
                 do {
                     isCorrect = false;
                     System.out.print("Введите название игры: ");
@@ -201,6 +109,11 @@ public class TowersGameMain {
                         try {
                             gameName = scanner.nextLine();
                             isCorrect = game.checkGameName(gameName);
+                            if (isCorrect) {
+                                if (!gameNames.containsKey(gameName)) {
+                                    isCorrect = false;
+                                }
+                            }
                         } catch (NumberFormatException ignored) {
                         }
                     }
@@ -209,10 +122,108 @@ public class TowersGameMain {
                     }
                 } while (!isCorrect);
 
-                if (game.save(gameName)) {
-                    System.out.println("Игра сохранена!");
+                if ((game = game.load(gameName)) != null) {
+                    List<String> loadedSteps = game.getSavedSteps();
+
+                    game.start();
+                    game.printField();
+
+                    for (String s : loadedSteps) {
+                        System.out.print("Сделайте ход: ");
+                        System.out.println(s);
+
+                        isCorrect = game.step(s);
+
+                        if (isCorrect) {
+                            game.printField();
+                        } else {
+                            System.out.println("Ход невозможен!");
+                        }
+                    }
                 } else {
-                    System.out.println("Ошибка записи файла!");
+                    System.out.println("Ошибка чтения файла!");
+                }
+            } else {
+                isExit = true;
+                System.out.println("Сохраненные игры отсутствуют!");
+            }
+        }
+
+        if (!isExit) {
+            while (game != null && game.isContinue()) {
+                isNewSteps = true;
+                System.out.print("Сделайте ход: ");
+
+                if (game.getGameType() == 1) {
+                    if (scanner.hasNext()) {
+                        try {
+                            consoleText = scanner.nextLine();
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+
+                    isCorrect = game.step(consoleText);
+                } else {
+                    isCorrect = game.step();
+                    System.out.println(game.getGeneratedStep());
+                }
+
+                if (!game.getIsExit()) {
+                    if (isCorrect) {
+                        game.printField();
+                    } else {
+                        System.out.println("Ход невозможен!");
+                    }
+                }
+            }
+
+            if (game != null && !game.getIsExit()) {
+                System.out.println("Победа!");
+                System.out.println("Количество шагов: " + game.getStepsCount());
+            }
+
+            if (isNewSteps) {
+                int console = 0;
+
+                do {
+                    isCorrect = false;
+                    System.out.print("Сохранить игру: 1 - да, 2 - нет: ");
+                    if (scanner.hasNext()) {
+                        try {
+                            console = Integer.parseInt(scanner.nextLine());
+
+                            if (console == 1 || console == 2) {
+                                isCorrect = true;
+                            }
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+                    if (!isCorrect) {
+                        System.out.println("Ошибка ввода!");
+                    }
+                } while (!isCorrect);
+
+                if (console == 1) {
+                    do {
+                        isCorrect = false;
+                        System.out.print("Введите название игры: ");
+                        if (scanner.hasNext()) {
+                            try {
+                                gameName = scanner.nextLine();
+                                isCorrect = game.checkGameName(gameName);
+                            } catch (NumberFormatException ignored) {
+                            }
+                        }
+                        if (!isCorrect) {
+                            System.out.println("Ошибка ввода!");
+                        }
+                    } while (!isCorrect);
+
+                    if (game.save(gameName)) {
+                        System.out.println("Игра сохранена!");
+                    } else {
+                        System.out.println("Ошибка записи файла!");
+                    }
                 }
             }
         }
