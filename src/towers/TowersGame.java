@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class TowersGame implements Serializable {
     public static final String FILE_PATH = "saved_towers_games";
-    public static final String FILE_TYPE = ".towers";
-    public static final String FILE_TYPE_FINISHED = ".finished";
+    public static final String FILE_TYPE = ".tg1";
+    public static final String FILE_TYPE_FINISHED = ".tg0";
 
     private boolean isRules = false;
     private boolean isExit = false;
@@ -223,8 +223,10 @@ public class TowersGame implements Serializable {
             e.printStackTrace();
         }
 
-        generatedStep = (new Random().nextInt(towersCount) + 1)
-                + "->" + (new Random().nextInt(towersCount) + 1);
+        do {
+            generatedStep = (new Random().nextInt(towersCount) + 1)
+                    + "->" + (new Random().nextInt(towersCount) + 1);
+        } while (!(!isRules || checkStep(generatedStep)));
 
         return step(generatedStep);
     }
@@ -363,30 +365,34 @@ public class TowersGame implements Serializable {
         }
 
         try {
-            String typeFinished = "";
+            String fileType = FILE_TYPE;
 
             if (!isExit) {
-                typeFinished = FILE_TYPE_FINISHED;
+                fileType = FILE_TYPE_FINISHED;
             }
 
             isExit = false;
 
             File file = new File(FILE_PATH);
+
             if (!file.exists()) {
                 file.mkdir();
             }
 
             file = new File(FILE_PATH, gameName + FILE_TYPE);
+
             if (file.exists()) {
                 file.delete();
             }
 
-            file = new File(FILE_PATH, gameName + FILE_TYPE + FILE_TYPE_FINISHED);
+            file = new File(FILE_PATH, gameName + FILE_TYPE_FINISHED);
+
             if (file.exists()) {
                 file.delete();
             }
 
-            file = new File(FILE_PATH, gameName + FILE_TYPE + typeFinished);
+            file = new File(FILE_PATH, gameName + fileType);
+
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -407,7 +413,7 @@ public class TowersGame implements Serializable {
         }
 
         try {
-            File file = new File(FILE_PATH, gameName + FILE_TYPE + FILE_TYPE_FINISHED);
+            File file = new File(FILE_PATH, gameName + FILE_TYPE_FINISHED);
             ObjectInputStream objectStream = new ObjectInputStream(
                     new FileInputStream(file));
             TowersGame loadedObject = (TowersGame) objectStream.readObject();
@@ -447,13 +453,13 @@ public class TowersGame implements Serializable {
                 if (file.isFile() && file.toString().endsWith(FILE_TYPE)) {
                     filesMap.put(file.toString()
                             .replaceAll(FILE_PATH + "\\\\", "")
-                            .replaceAll("\\" + FILE_TYPE, ""), 0);
+                            .replaceAll("\\" + FILE_TYPE, ""), 1);
                 }
 
-                if (file.isFile() && file.toString().endsWith(FILE_TYPE + FILE_TYPE_FINISHED)) {
+                if (file.isFile() && file.toString().endsWith(FILE_TYPE_FINISHED)) {
                     filesMap.put(file.toString()
                             .replaceAll(FILE_PATH + "\\\\", "")
-                            .replaceAll("\\" + FILE_TYPE + "\\" + FILE_TYPE_FINISHED, ""), 1);
+                            .replaceAll("\\" + FILE_TYPE_FINISHED, ""), 0);
                 }
             }
 
