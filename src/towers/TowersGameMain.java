@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Класс TowersGameMain - игра Ханойские башни
+ */
 public class TowersGameMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -17,14 +20,20 @@ public class TowersGameMain {
         boolean isNewSteps = false;
         boolean isExit = false;
 
+        // Установка слова для выхода из ручной игры
         game.setExitText("EXIT");
+
+        // Установка знания правил автоматической игрой
         game.setRules(true);
+
+        // Установка длительности обдумывания решения автоматической игрой
         game.setSleepMillis(0);
 
         System.out.println("Игра Ханойская башня");
         System.out.println("Сделать ход: цифра->цифра (например, 1->3) или введите "
                 + game.getExitText());
 
+        // Запрос режима игры
         do {
             isCorrect = false;
             System.out.print("Введите режим игры: 1 - ручной, 2 - автоматический: ");
@@ -38,6 +47,7 @@ public class TowersGameMain {
             }
         } while (!isCorrect);
 
+        // Запрос режима ручной игры
         if (game.getGameType() == 1) {
             do {
                 isCorrect = false;
@@ -55,6 +65,8 @@ public class TowersGameMain {
 
         if ((game.getGameType() == 1 && game.getManualGameType() == 1)
                 || game.getGameType() == 2) {
+
+            // Запрос количества башен
             do {
                 isCorrect = false;
                 System.out.print("Введите количество башен от "
@@ -70,6 +82,7 @@ public class TowersGameMain {
                 }
             } while (!isCorrect);
 
+            // Запрос количества колец
             do {
                 isCorrect = false;
                 System.out.print("Введите количество колец от "
@@ -92,6 +105,7 @@ public class TowersGameMain {
         if (game.getGameType() == 1 && game.getManualGameType() == 2) {
             Map<String, Integer> gameNames = game.getGameNames();
 
+            // Вывод списка сохраненных игр
             if (gameNames != null && !gameNames.isEmpty()) {
                 System.out.println("Сохраненные игры (\u001B[31mзавершенные\u001B[0m, \u001B[32mнезавершенные\u001B[0m): ");
                 for (String name : gameNames.keySet()) {
@@ -102,6 +116,7 @@ public class TowersGameMain {
                     }
                 }
 
+                // Запрос названия игры
                 do {
                     isCorrect = false;
                     System.out.print("Введите название игры: ");
@@ -122,6 +137,7 @@ public class TowersGameMain {
                     }
                 } while (!isCorrect);
 
+                // Запрос хода из файла
                 if ((game = game.load(gameName)) != null) {
                     List<String> loadedSteps = game.getSavedSteps();
 
@@ -149,6 +165,7 @@ public class TowersGameMain {
             }
         }
 
+        // Запрос хода
         if (!isExit) {
             while (game != null && game.isContinue()) {
                 isNewSteps = true;
@@ -185,6 +202,7 @@ public class TowersGameMain {
             if (isNewSteps) {
                 int console = 0;
 
+                // Запрос сохранения игры
                 do {
                     isCorrect = false;
                     System.out.print("Сохранить игру: 1 - да, 2 - нет: ");
@@ -203,6 +221,7 @@ public class TowersGameMain {
                     }
                 } while (!isCorrect);
 
+                // Запрос названия игры
                 if (console == 1) {
                     do {
                         isCorrect = false;
