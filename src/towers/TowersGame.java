@@ -36,13 +36,13 @@ public class TowersGame implements Serializable {
     private List<String> savedSteps;
 
     /**
-     * Конструктор экземпляра класса базовый
+     * Конструктор класса базовый
      */
     public TowersGame() {
     }
 
     /**
-     * Конструктор экземпляра класса с параметрами
+     * Конструктор класса с аргументами
      */
     public TowersGame(int gameType, int manualGameType, int towersCount, int circlesCount) {
         setGameType(gameType);
