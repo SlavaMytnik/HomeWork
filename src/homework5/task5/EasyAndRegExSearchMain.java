@@ -29,29 +29,28 @@ public class EasyAndRegExSearchMain {
         }
 
         System.out.println("EasySearch:");
-        print(stringBuffer, "война", new EasySearch(), false);
-        print(stringBuffer, "и", new EasySearch(), false);
-        print(stringBuffer, "мир", new EasySearch(), false);
+        print(stringBuffer.toString(), "война", new EasySearch(), false);
+        print(stringBuffer.toString(), "и", new EasySearch(), false);
+        print(stringBuffer.toString(), "мир", new EasySearch(), false);
 
         System.out.println("\nRegExSearch:");
-        print(stringBuffer, "война", new RegExSearch(), false);
-        print(stringBuffer, "и", new RegExSearch(), false);
-        print(stringBuffer, "мир", new RegExSearch(), false);
+        print(stringBuffer.toString(), "война", new RegExSearch(), false);
+        print(stringBuffer.toString(), "и", new RegExSearch(), false);
+        print(stringBuffer.toString(), "мир", new RegExSearch(), false);
     }
 
     /**
      * Метод print выводит на печать результат поиска слова в тексте
-     * @param stringBuffer - текст, в котором происходит поиск, в формате StringBuffer
+     * @param text - текст, в котором происходит поиск, в формате StringBuffer
      * @param word - искомое слово
      * @param searchEngine определяет экземпляр класса поиска
      * @param caseSensitive определяет чувствительность к регистру при поиске:
      *      *                      true - регистр учитывается,
      *      *                      false - регистр не учитывается
      */
-    private static void print(StringBuffer stringBuffer, String word,
+    private static void print(String text, String word,
                                     ISearchEngine searchEngine, boolean caseSensitive) {
         System.out.println("Слово \u00AB" + word + "\u00BB встречается в тексте "
-                + searchEngine.search(stringBuffer.toString(),
-                word, caseSensitive) + " раз(а)");
+                + searchEngine.search(text, word, caseSensitive) + " раз(а)");
     }
 }
