@@ -1,8 +1,6 @@
 package homework5.task2;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +23,7 @@ public class Task2_1 {
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
                         "[^\\`\\~\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)"
-                                + "\\-\\_\\=\\+\\-\\*\\/\\|\\{\\}"
+                                + "\\_\\=\\+\\-\\*\\/\\|\\{\\}"
                                 + "\\[\\]\\:\\;\\'\\,\\.\\<\\>\\?"
                                 + "\\u00AB\\u00AA\\u0022\\ \\\\]+");
                 Matcher matcher = pattern.matcher(line);

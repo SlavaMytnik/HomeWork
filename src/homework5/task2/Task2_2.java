@@ -26,7 +26,7 @@ public class Task2_2 {
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
                         "[^\\`\\~\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)"
-                                + "\\-\\_\\=\\+\\-\\*\\/\\|\\{\\}"
+                                + "\\_\\=\\+\\-\\*\\/\\|\\{\\}"
                                 + "\\[\\]\\:\\;\\'\\,\\.\\<\\>\\?"
                                 + "\\u00AB\\u00AA\\u0022\\ \\\\]+");
                 Matcher matcher = pattern.matcher(line);
