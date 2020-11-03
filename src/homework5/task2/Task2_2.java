@@ -25,16 +25,17 @@ public class Task2_2 {
 
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
-                        "[^\\!\\(\\)\\{\\}\\[\\]\\:\\;\\'\\,\\.\\<\\>"
-                                + "\\?\\u00AB\\u00AA\\u0022\\ ]+");
+                        "[^\\!\\(\\):;',\\.\\?\\u00AB\\u00AA\\u0022\\ ]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {
-                    if (wordsUnsorted.containsKey(matcher.group())) {
-                        wordsUnsorted.put(matcher.group(),
-                                wordsUnsorted.get(matcher.group()) + 1);
-                    } else {
-                        wordsUnsorted.put(matcher.group(), 1);
+                    if (!matcher.group().matches("--+")) {
+                        if (wordsUnsorted.containsKey(matcher.group())) {
+                            wordsUnsorted.put(matcher.group(),
+                                    wordsUnsorted.get(matcher.group()) + 1);
+                        } else {
+                            wordsUnsorted.put(matcher.group(), 1);
+                        }
                     }
                 }
             }

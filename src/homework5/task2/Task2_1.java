@@ -22,12 +22,13 @@ public class Task2_1 {
 
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
-                        "[^\\!\\(\\)\\{\\}\\[\\]\\:\\;\\'\\,\\.\\<\\>"
-                                + "\\?\\u00AB\\u00AA\\u0022\\ ]+");
+                        "[^\\!\\(\\):;',\\.\\?\\u00AB\\u00AA\\u0022\\ ]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {
-                    words.add(matcher.group());
+                    if (!matcher.group().matches("--+")) {
+                        words.add(matcher.group());
+                    }
                 }
             }
         } catch (IOException e) {
