@@ -1,6 +1,9 @@
 package homework5.task2;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -15,11 +18,14 @@ public class Task2_1 {
         Set<String> words = new HashSet<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                "Война и мир_книга.txt"))) {
+                Paths.get("HomeWork","src", "resources")
+                        + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                Pattern pattern = Pattern.compile("[а-яА-Я]+");
+                Pattern pattern = Pattern.compile(
+                        "[^\\?\\{\\}\\[\\]\\|\\<\\>\\!\\@\\#\\$\\%\\^\\u00AB" +
+                                "\\u00AA\\u0022\\&\\*\\(\\)\\.\\:\\;\\'\\ \\,\\+\\-\\=\\/]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {

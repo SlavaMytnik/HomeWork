@@ -1,8 +1,10 @@
 package homework5.task2;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,11 +19,14 @@ public class Task2_2 {
         Map<Integer, List<String>> wordsSorted = new TreeMap<>(Collections.reverseOrder());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                "Война и мир_книга.txt"))) {
+                Paths.get("HomeWork","src", "resources")
+                        + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                Pattern pattern = Pattern.compile("[а-яА-Я]+");
+                Pattern pattern = Pattern.compile(
+                        "[^\\?\\{\\}\\[\\]\\|\\<\\>\\!\\@\\#\\$\\%\\^\\u00AB" +
+                                "\\u00AA\\u0022\\&\\*\\(\\)\\.\\:\\;\\'\\ \\,\\+\\-\\=\\/]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {
@@ -56,7 +61,7 @@ public class Task2_2 {
                 System.out.println(i + ". \u00AB" + s + "\u00BB - " + entry.getKey() + " раз(а)");
             }
 
-            if (i == 10) {
+            if (i == 300) {
                 break;
             }
         }

@@ -5,8 +5,10 @@ import homework5.task4.EasySearch;
 import homework5.task4.RegExSearch;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * Класс EasyAndRegExSearchMain выполняет Задание 5 ДЗ 5
@@ -18,7 +20,8 @@ public class EasyAndRegExSearchMain {
         StringBuffer stringBuffer = new StringBuffer();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                "Война и мир_книга.txt"))) {
+                Paths.get("HomeWork","src", "resources")
+                        + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -41,7 +44,7 @@ public class EasyAndRegExSearchMain {
 
     /**
      * Метод print выводит на печать результат поиска слова в тексте
-     * @param text - текст, в котором происходит поиск, в формате StringBuffer
+     * @param text - текст, в котором происходит поиск
      * @param word - искомое слово
      * @param searchEngine определяет экземпляр класса поиска
      * @param caseSensitive определяет чувствительность к регистру при поиске:
