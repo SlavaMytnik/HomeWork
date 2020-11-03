@@ -18,14 +18,16 @@ public class Task2_1 {
         Set<String> words = new HashSet<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                Paths.get("HomeWork","src", "resources")
+                Paths.get("HomeWork", "src", "resources")
                         + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
-                        "[^\\?\\{\\}\\[\\]\\|\\<\\>\\!\\@\\#\\$\\%\\^\\u00AB" +
-                                "\\u00AA\\u0022\\&\\*\\(\\)\\.\\:\\;\\'\\ \\,\\+\\-\\=\\/]+");
+                        "[^\\`\\~\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)" +
+                                "\\-\\_\\=\\+\\-\\*\\/\\|\\{\\}" +
+                                "\\[\\]\\:\\;\\'\\,\\.\\<\\>\\?" +
+                                "\\u00AB\\u00AA\\u0022\\ \\\\]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {

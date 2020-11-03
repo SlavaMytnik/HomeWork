@@ -19,19 +19,22 @@ public class Task2_2 {
         Map<Integer, List<String>> wordsSorted = new TreeMap<>(Collections.reverseOrder());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                Paths.get("HomeWork","src", "resources")
+                Paths.get("HomeWork", "src", "resources")
                         + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 Pattern pattern = Pattern.compile(
-                        "[^\\?\\{\\}\\[\\]\\|\\<\\>\\!\\@\\#\\$\\%\\^\\u00AB" +
-                                "\\u00AA\\u0022\\&\\*\\(\\)\\.\\:\\;\\'\\ \\,\\+\\-\\=\\/]+");
+                        "[^\\`\\~\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)" +
+                                "\\-\\_\\=\\+\\-\\*\\/\\|\\{\\}" +
+                                "\\[\\]\\:\\;\\'\\,\\.\\<\\>\\?" +
+                                "\\u00AB\\u00AA\\u0022\\ \\\\]+");
                 Matcher matcher = pattern.matcher(line);
 
                 while (matcher.find()) {
                     if (wordsUnsorted.containsKey(matcher.group())) {
-                        wordsUnsorted.put(matcher.group(), wordsUnsorted.get(matcher.group()) + 1);
+                        wordsUnsorted.put(matcher.group(),
+                                wordsUnsorted.get(matcher.group()) + 1);
                     } else {
                         wordsUnsorted.put(matcher.group(), 1);
                     }
@@ -58,10 +61,10 @@ public class Task2_2 {
             i++;
 
             for (String s : entry.getValue()) {
-                System.out.println(i + ". \u00AB" + s + "\u00BB - " + entry.getKey() + " раз(а)");
+                System.out.println(i + ". \u001B[34m" + s + "\u001B[0m - " + entry.getKey() + " раз(а)");
             }
 
-            if (i == 300) {
+            if (i == 10) {
                 break;
             }
         }

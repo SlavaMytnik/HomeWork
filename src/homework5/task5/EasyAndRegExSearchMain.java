@@ -20,7 +20,7 @@ public class EasyAndRegExSearchMain {
         StringBuffer stringBuffer = new StringBuffer();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                Paths.get("HomeWork","src", "resources")
+                Paths.get("HomeWork", "src", "resources")
                         + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
@@ -53,7 +53,7 @@ public class EasyAndRegExSearchMain {
      */
     private static void print(String text, String word,
                                     ISearchEngine searchEngine, boolean caseSensitive) {
-        System.out.println("Слово \u00AB" + word + "\u00BB встречается в тексте "
+        System.out.println("Слово \u001B[34m" + word + "\u001B[0m встречается в тексте "
                 + searchEngine.search(text, word, caseSensitive) + " раз(а)");
     }
 }
