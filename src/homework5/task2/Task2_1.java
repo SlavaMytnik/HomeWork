@@ -16,7 +16,7 @@ public class Task2_1 {
         Set<String> words = new HashSet<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                Paths.get("HomeWork", "src", "resources")
+                Paths.get("HomeWork", "resources")
                         + File.separator + "Война и мир_книга.txt"))) {
             String line;
 

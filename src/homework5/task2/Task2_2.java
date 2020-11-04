@@ -19,7 +19,7 @@ public class Task2_2 {
         Map<Integer, List<String>> wordsSorted = new TreeMap<>(Collections.reverseOrder());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(
-                Paths.get("HomeWork", "src", "resources")
+                Paths.get("HomeWork", "resources")
                         + File.separator + "Война и мир_книга.txt"))) {
             String line;
 
