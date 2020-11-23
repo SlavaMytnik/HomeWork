@@ -61,7 +61,6 @@ public class WordCountMain {
             firstLine = false;
         }
     }
-
 }
 
 
