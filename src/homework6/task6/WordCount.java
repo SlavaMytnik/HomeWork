@@ -43,7 +43,7 @@ public class WordCount {
 
         for (int i = 0; i < textPartsCount; i++) {
             int fromIndex = i == 0 ? 0
-                    : text.indexOf(" ",i * text.length() / textPartsCount);
+                    : text.indexOf(" ", i * text.length() / textPartsCount);
 
             int toIndex = text.indexOf(" ",
                     (i + 1) * text.length() / textPartsCount);
