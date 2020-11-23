@@ -45,8 +45,8 @@ public class WordCount {
             int fromIndex = i == 0 ? 0
                     : text.indexOf(" ", i * text.length() / textPartsCount);
 
-            int toIndex = text.indexOf(" ",
-                    (i + 1) * text.length() / textPartsCount);
+            int toIndex = i == (textPartsCount - 1) ? text.length()
+                    : text.indexOf(" ", (i + 1) * text.length() / textPartsCount);
 
             if (fromIndex == -1) fromIndex = text.length();
             if (toIndex == -1) toIndex = text.length();
@@ -54,14 +54,9 @@ public class WordCount {
             if (fromIndex != toIndex) {
                 String part = text.substring(fromIndex, toIndex);
 
-                Future<Long> future;
-                if (useLambda) {
-                    future = executorService.submit(() ->
-                            searchEngine.search(part, word, caseSensitive));
-                } else {
-                    future = executorService.submit(new WordCountCallable(
-                            part, word, searchEngine, caseSensitive));
-                }
+                Future<Long> future = executorService.submit(useLambda ?
+                        () -> searchEngine.search(part, word, caseSensitive)
+                        : new WordCountCallable(part, word, searchEngine, caseSensitive));
 
                 futureMap.put(future, false);
             }
