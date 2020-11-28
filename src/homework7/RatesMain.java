@@ -52,8 +52,7 @@ public class RatesMain {
 
                         // Определение имени файла для сохранения курсов валют
                         File file = RatesTools.consoleFileName(scanner,
-                                "Введите имя файла: ",
-                                "Ошибка ввода!");
+                                "Введите имя файла: ");
 
                         if (RatesTools.saveFile(file,
                                 source.getClass().getSimpleName(), results)) {

@@ -188,8 +188,7 @@ public class RatesTools {
      * @return возвращает переменную типа Map
      */
     public static <V> Map<Integer, V> makeMap(List<V> array){
-        AtomicInteger i0 = new AtomicInteger();
-        i0.set(0);
+        AtomicInteger i0 = new AtomicInteger(0);
 
         return array.stream().collect(Collectors.toMap(
                 i -> i0.incrementAndGet(), Function.identity()));
@@ -235,21 +234,13 @@ public class RatesTools {
      * у пользователя через консоль и возвращает файл
      * @param scanner - сканер консоли
      * @param text - текст запроса
-     * @param errorText - текст ошибки
      * @return возвращает файл
      */
     public static File consoleFileName(Scanner scanner,
-                                       String text,
-                                       String errorText) {
-        while (true) {
-            System.out.print(text);
+                                       String text) {
+        System.out.print(text);
 
-            if (scanner.hasNext()) {
-                return new File(scanner.nextLine());
-            }
-
-            System.out.println(errorText);
-        }
+        return new File(scanner.nextLine());
     }
 
     /**
